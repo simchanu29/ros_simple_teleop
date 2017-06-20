@@ -40,10 +40,10 @@ def process(msg, key_map, topic, cmd):
         print 'len(msg.data) == 0 : ', len(msg.data) == 0
         print 'key_map.has_key(msg.data) : ', key_map.has_key(msg.data)
         print 'unknown key : ', msg.data
-        return  # unknown key
+        return None, None # unknown key
     elif key_map[msg.data]['topic'] is not topic \
             and key_map[msg.data]['topic'] is not 'state':
-        return  # key that shouldn't be translated in this instance
+        return None, None # key that shouldn't be translated in this instance
 
     # Récupération des données
     val = key_map[msg.data]['value']
