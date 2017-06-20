@@ -25,6 +25,9 @@ msg/_*.py
 .project
 .cproject
 
+# jetbrains stuff
+.idea
+
 # qcreator stuff
 CMakeLists.txt.user
 
