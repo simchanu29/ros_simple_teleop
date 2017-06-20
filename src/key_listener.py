@@ -11,7 +11,10 @@ if __name__ == '__main__':
     old_attr = termios.tcgetattr(sys.stdin)
     tty.setcbreak(sys.stdin.fileno())
 
-    print rospy.get_param('key_mapping')
+    key_map = rospy.get_param('key_mapping')
+    print key_map
+    print key_map.a
+
 
     print "Publishing keystrokes. Press Ctrl-C to exit..."
 
