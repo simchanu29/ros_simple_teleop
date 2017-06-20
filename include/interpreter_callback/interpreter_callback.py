@@ -63,3 +63,4 @@ def process(msg, key_map, topic, cmd):
     if cmd.manual:
         return True, cmd
     return False, None
+    print "auto mode :", cmd.manual
