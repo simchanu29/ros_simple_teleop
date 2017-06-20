@@ -1,7 +1,26 @@
-key_mapping:
-  'a':
+topic_map:
+  'state':
+    'Manuel': True
+    'Automatic': False
+  'twist':
+    'usage': ['lin_vel_x','lin_vel_y','ang_vel_z']
+    'range_lin': 10.0
+    'range_ang': 10.0
+  'wrench':
+    'usage': ['force_x','force_y','torque_z']
+    'range_lin': 10.0
+    'range_ang': 10.0
+
+key_map:
+  'z':
     topic: 'twist'
     value: [0,0,1]
+  ' ':
+    topic: 'twist'
+    value: [0,0,0]
+  'r':
+    topic: 'twist'
+    value: ['r','r','r']
 
 
 
