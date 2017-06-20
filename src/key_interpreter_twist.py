@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # coding=utf-8
 import rospy
-from std_msgs.msg import String
-from std_msgs.msg import Int8
 from geometry_msgs.msg import Twist
-import include.interpreter_callback as interpreter_callback
+from std_msgs.msg import String
+import interpreter_callback.interpreter_callback as interpreter_callback
+
 
 class key_interpreter():
     def __init__(self):

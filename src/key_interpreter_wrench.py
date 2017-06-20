@@ -4,7 +4,7 @@ import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Int8
 from geometry_msgs.msg import Wrench
-import interpreter_callback
+import interpreter_callback.interpreter_callback as interpreter_callback
 
 class key_interpreter():
     def __init__(self):
