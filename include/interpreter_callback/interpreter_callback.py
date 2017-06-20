@@ -44,11 +44,11 @@ def process(msg, key_map, topic, cmd):
         print 'len(msg.data) == 0 : ', len(msg.data) == 0
         print 'key_map.has_key(msg.data) : ', key_map.has_key(msg.data)
         print 'unknown key : ', msg.data
-        return None, None # unknown key
+        return False, cmd # unknown key
     elif (key_map[msg.data]['topic'] != topic) \
             and (key_map[msg.data]['topic'] != 'state'):
         print "key that shouldn't be translated in this instance :", key_map[msg.data]['topic'], topic
-        return None, None # key that shouldn't be translated in this instance
+        return False, cmd # key that shouldn't be translated in this instance
 
     # Récupération des données
     val = key_map[msg.data]['value']
@@ -71,5 +71,5 @@ def process(msg, key_map, topic, cmd):
     if cmd.manual:
         return True, cmd
     print "auto mode :", cmd.manual
-    return False, None
+    return False, cmd
 
