@@ -43,6 +43,7 @@ def process(msg, key_map, topic, cmd):
         return None, None # unknown key
     elif key_map[msg.data]['topic'] is not topic \
             and key_map[msg.data]['topic'] is not 'state':
+        print "key that shouldn't be translated in this instance :", key_map[msg.data]['topic'], topic
         return None, None # key that shouldn't be translated in this instance
 
     # Récupération des données
