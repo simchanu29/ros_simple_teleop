@@ -26,11 +26,13 @@ def process_vec3(val, cmd):
     return cmd
 
 def process_twist(val, cmd):
-    return process_vec3(val, cmd.twist)
+    cmd.twist = process_vec3(val, cmd.twist)
+    return cmd
 
 
 def process_wrench(val, cmd):
-    return process_vec3(val, cmd.wrench)
+    cmd.wrench = process_vec3(val, cmd.wrench)
+    return cmd
 
 
 def process(msg, key_map, topic, cmd):
