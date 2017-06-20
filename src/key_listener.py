@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
     key_map = rospy.get_param('key_mapping')
     print key_map
-    print key_map['a']
+    print key_map['a']['value']
 
 
     print "Publishing keystrokes. Press Ctrl-C to exit..."
