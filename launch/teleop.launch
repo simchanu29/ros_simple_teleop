@@ -1,7 +1,7 @@
 <launch>
 	<rosparam file="launch/keyconfig.yaml" />
 
-	<node pkg="ros_teleop" name="key_listener" type="key_listener.py" />
+	<node pkg="ros_teleop" name="key_listener" type="key_listener.py" output="screen"/>
 
 	<!--<node pkg="ros_teleop" name="key_interpreter" type="key_interpreter.py" />-->
 
