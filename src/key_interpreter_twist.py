@@ -17,7 +17,7 @@ class key_interpreter():
 
             if send:
                 # Creation du message twist
-                print 'cmd motors :  ', self.cmd.wrench
+                print 'cmd motors :  ', self.cmd.twist
                 t = Twist()
 
                 t.angular.x = 0

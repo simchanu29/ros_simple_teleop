@@ -14,7 +14,7 @@ topic_map:
 key_map:
   'z':
     topic: 'twist'
-    value: [0,0,1]
+    value: [1,0,0]
   ' ':
     topic: 'twist'
     value: [0,0,0]
