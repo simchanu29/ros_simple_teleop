@@ -4,7 +4,7 @@ import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Int8
 from geometry_msgs.msg import Twist
-import interpreter_callback
+import include.interpreter_callback as interpreter_callback
 
 class key_interpreter():
     def __init__(self):
