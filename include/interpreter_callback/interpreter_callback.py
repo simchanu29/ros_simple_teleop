@@ -57,10 +57,12 @@ def process(msg, key_map, topic, cmd):
     elif topic is "wrench":
         cmd = process_wrench(val, cmd)
     elif topic is "state":
+        print "Changing state command :", cmd.manual
         cmd.manual = val
 
     # Envoi de la commande si en manuel
     if cmd.manual:
         return True, cmd
-    return False, None
     print "auto mode :", cmd.manual
+    return False, None
+
