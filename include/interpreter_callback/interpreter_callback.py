@@ -37,6 +37,8 @@ def process_wrench(val, cmd):
 
 def process(msg, key_map, topic, cmd):
 
+    print cmd
+
     # Gestion des erreurs : le message est vide, non reconnu ou pas du bon topic
     if len(msg.data) == 0 or not key_map.has_key(msg.data):
         print 'len(msg.data) == 0 : ', len(msg.data) == 0
@@ -62,6 +64,8 @@ def process(msg, key_map, topic, cmd):
     elif topic is "state":
         print "Changing state command :", cmd.manual
         cmd.manual = val
+
+    print cmd
 
     # Envoi de la commande si en manuel
     if cmd.manual:
