@@ -37,6 +37,10 @@ topic_map:
     'type': 'position'
     'range': 90
     'precision': 100
+  'position_servo2':
+    'type': 'position'
+    'range': 90
+    'precision': 100
 
 key_map:
   # switch teleop key
@@ -44,17 +48,68 @@ key_map:
     topic: 'switch_teleop'
 
   # Twist keys
-  'z':
-    topic: 'twist'
-    value: [1,0,0]
   ' ':
     topic: 'twist'
     value: ['STOP','STOP','STOP']
   'r':
     topic: 'twist'
     value: ['BACK','BACK','BACK']
+  'z':
+    topic: 'twist'
+    value: [1,0,0]
+  's':
+    topic: 'twist'
+    value: [-1,0,0]
+  'q':
+    topic: 'twist'
+    value: [0,1,0]
+  'd':
+    topic: 'twist'
+    value: [0,-1,0]
+  'a':
+    topic: 'twist'
+    value: [0,0,1]
+  'e':
+    topic: 'twist'
+    value: [0,0,-1]
 
   # Wrench keys
+  '5':
+    topic: 'twist'
+    value: ['STOP','STOP','STOP']
+  '0':
+    topic: 'twist'
+    value: ['BACK','BACK','BACK']
+  '8':
+    topic: 'twist'
+    value: [1,0,0]
+  '2':
+    topic: 'twist'
+    value: [-1,0,0]
+  '4':
+    topic: 'twist'
+    value: [0,1,0]
+  '6':
+    topic: 'twist'
+    value: [0,-1,0]
+  '7':
+    topic: 'twist'
+    value: [0,0,1]
+  '9':
+    topic: 'twist'
+    value: [0,0,-1]
 
   # Position keys
+  'y':
+    topic: position_servo1
+    value: 1
+  'h':
+    topic: position_servo1
+    value: -1
+  'g':
+    topic: position_servo2
+    value: 1
+  'j':
+    topic: position_servo2
+    value: -1
 
