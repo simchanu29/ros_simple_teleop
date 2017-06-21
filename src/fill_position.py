@@ -9,13 +9,15 @@ class Command(CommandParent):
 
 
 def process_key(val, cmd, topic_info):
-    if val is 'r':
+    if val is 'BACK':
         if cmd != 0.0:
-            cmd = max(min(-cmd / abs(cmd), 1), -1)
+            cmd = max(min(-cmd / abs(cmd), 1.0), -1.0)
+        elif val is 'STOP':
+            cmd = 0.0
     else:
         cmd += val / topic_info['precision']
 
-    cmd = max(min(cmd, 1), -1)
+    cmd = max(min(cmd, 1.0), -1.0)
 
     return cmd
 

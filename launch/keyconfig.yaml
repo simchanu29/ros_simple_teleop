@@ -49,10 +49,10 @@ key_map:
     value: [1,0,0]
   ' ':
     topic: 'twist'
-    value: [0,0,0]
+    value: ['STOP','STOP','STOP']
   'r':
     topic: 'twist'
-    value: ['r','r','r']
+    value: ['BACK','BACK','BACK']
 
   # Wrench keys
 

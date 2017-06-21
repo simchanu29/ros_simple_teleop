@@ -10,13 +10,15 @@ class Command(CommandParent):
 
 def process_key(val, cmd, topic_info):
     for i in range(len(val)):
-        if val[i] is 'r':
+        if val[i] is 'BACK':
             if cmd[i] != 0.0:
-                cmd[i] = max(min(-cmd[i] / abs(cmd[i]), 1), -1)
+                cmd[i] = max(min(-cmd[i] / abs(cmd[i]), 1.0), -1.0)
+        elif val[i] is 'STOP':
+            cmd[i] = 0.0
         else:
             cmd[i] += val[i] / topic_info['precision']
 
-        cmd[i] = max(min(cmd[i], 1), -1)
+        cmd[i] = max(min(cmd[i], 1.0), -1.0)
 
     return cmd
 
