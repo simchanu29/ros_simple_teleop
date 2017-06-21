@@ -3,9 +3,8 @@
 
 	<node pkg="ros_teleop" name="key_listener" type="key_listener.py"/>
 
-	<!--<node pkg="ros_teleop" name="key_interpreter" type="key_interpreter.py" />-->
-
-	<node pkg="ros_teleop" name="key_wrench" type="key_interpreter_wrench.py" />
-	<node pkg="ros_teleop" name="key_twist" type="key_interpreter_twist.py" output="screen"/>
+	<node pkg="ros_teleop" name="key_twist" type="key_interpreter.py" output="screen">
+		<param topic_name="twist"/>
+	</node><node/>
 
 </launch>

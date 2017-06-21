@@ -1,17 +1,49 @@
-topic_map:
-  'state':
-    'Manuel': True
-    'Automatic': False
+# Hardcoded : link to the code
+topic_types:
+  'switch_teleop':
+    'usage': 'No value'
+    'structure': ['type']
+    'import': 'std_msgs.msgs.String'
+
   'twist':
-    'usage': ['lin_vel_x','lin_vel_y','ang_vel_z']
-    'range_lin': 10.0
-    'range_ang': 10.0
+    'usage': ['lin_x','lin_y','ang_z']
+    'structure': ['type', 'range_lin', 'range_ang', 'precision']
+    'import': 'geometry_msgs.msgs.Twist'
   'wrench':
-    'usage': ['force_x','force_y','torque_z']
+    'usage': ['lin_x','lin_y','ang_z']
+    'structure': ['type', 'range_lin', 'range_ang', 'precision']
+    'import': 'geometry_msgs.msgs.Wrench'
+  'position':
+    'usage': 'position'
+    'structure': ['type', 'range', 'precision']
+    'import': 'std_msgs.msgs.Float32'
+
+# Modifiable
+topic_map:
+  'switch_teleop':
+    'type': 'switch_teleop'
+
+  'twist':
+    'type': 'vec3'
     'range_lin': 10.0
     'range_ang': 10.0
+    'precision': 20.0
+  'wrench':
+    'type': 'vec3'
+    'range_lin': 10.0
+    'range_ang': 10.0
+    'precision': 20.0
+  'position_servo1':
+    'type': 'position'
+    'range': 90
+    'precision': 100
 
 key_map:
+  # switch teleop key
+  't':
+    topic: 'switch_teleop'
+
+  # Twist keys
   'z':
     topic: 'twist'
     value: [1,0,0]
@@ -22,5 +54,7 @@ key_map:
     topic: 'twist'
     value: ['r','r','r']
 
+  # Wrench keys
 
+  # Position keys
 
