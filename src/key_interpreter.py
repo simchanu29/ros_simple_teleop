@@ -3,7 +3,7 @@
 import rospy
 from pydoc import locate
 from std_msgs.msg import String
-import interpreter_callback.interpreter_callback as interpreter_callback
+import interpreter_callback
 
 
 class key_interpreter():
