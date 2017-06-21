@@ -37,14 +37,19 @@ if __name__ == '__main__':
     topic_types = rospy.get_param('topic_types')
     topic_type = topic_info['type']
     print 'topic_type :', topic_type
-    import_str_msg = topic_types[topic_type]['import']
-    print 'import_str_msg :', import_str_msg
+    import_str_msg_module = topic_types[topic_type]['import'][0]
+    print 'import_str_msg_module :', import_str_msg_module
+    import_str_msg_class = topic_types[topic_type]['import'][1]
+    print 'import_str_msg_class :', import_str_msg_class
     import_str_filler = topic_type
     print 'import_str_filler :', import_str_filler
 
     # Dynamic import
-    Cmd_Msg = locate(import_str_msg)
-    print 'import result Cmd_Msg :', Cmd_Msg
+    # Ros is bound to import only
+    Msg_module = __import__(import_str_msg_module, fromlist=[import_str_msg_class])
+    Msg_class = getattr(Msg_module, import_str_msg_class)
+    print 'import result Cmd_Msg :', Msg_class
+    # Locate works only here
     fill_msg = locate('fill_'+import_str_filler+'.fill_msg')
     print 'import result fill_msg :', fill_msg
     Command = locate('fill_' + import_str_filler + '.Command')
