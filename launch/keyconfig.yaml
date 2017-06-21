@@ -1,21 +1,29 @@
 # Hardcoded : link to the code
 topic_types:
   'switch_teleop':
+    # Pour rappel
     'usage': 'No value'
     'structure': ['type']
+    # Utile pour le code
     'import': ['std_msgs.msg', 'String']
 
   'twist':
+    # Pour rappel
     'usage': ['lin_x','lin_y','ang_z']
     'structure': ['type', 'range_lin', 'range_ang', 'precision']
+    # Utile pour le code
     'import': ['geometry_msgs.msg', 'Twist']
   'wrench':
+    # Pour rappel
     'usage': ['lin_x','lin_y','ang_z']
     'structure': ['type', 'range_lin', 'range_ang', 'precision']
+    # Utile pour le code
     'import': ['geometry_msgs.msg', 'Wrench']
   'position':
+    # Pour rappel
     'usage': 'position'
     'structure': ['type', 'range', 'precision']
+    # Utile pour le code
     'import': ['std_msgs.msg', 'Float32']
 
 # Modifiable
