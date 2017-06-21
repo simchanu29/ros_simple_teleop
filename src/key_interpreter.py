@@ -25,7 +25,6 @@ class key_interpreter():
 
 
 if __name__ == '__main__':
-    ki = key_interpreter()
     rospy.init_node('keys_to_twist')
 
     # Param server
@@ -48,6 +47,8 @@ if __name__ == '__main__':
     fill_msg = locate('interpreter_callback.'+import_str_filler+'.fill_msg')
     Command = locate('interpreter_callback.' + import_str_filler + '.Command')
     process_key = locate('interpreter_callback.' + import_str_filler + '.process_key')
+
+    ki = key_interpreter()
 
     # Dynamic publisher
     cmd_pub = rospy.Publisher('cmd_'+topic_name, Cmd_Msg, queue_size=1)
