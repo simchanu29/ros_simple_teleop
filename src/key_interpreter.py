@@ -3,7 +3,7 @@
 import rospy
 from pydoc import locate
 from std_msgs.msg import String
-import interpreter_callback
+import interpreter_callback.interpreter_callback as interpreter_callback
 
 
 class key_interpreter():
@@ -45,11 +45,11 @@ if __name__ == '__main__':
     # Dynamic import
     Cmd_Msg = locate(import_str_msg)
     print 'import result Cmd_Msg :', Cmd_Msg
-    fill_msg = locate('interpreter_callback.'+import_str_filler+'.fill_msg')
+    fill_msg = locate('fill_'+import_str_filler+'.fill_msg')
     print 'import result fill_msg :', fill_msg
-    Command = locate('interpreter_callback.' + import_str_filler + '.Command')
+    Command = locate('fill_' + import_str_filler + '.Command')
     print 'import result Command :', Command
-    process_key = locate('interpreter_callback.' + import_str_filler + '.process_key')
+    process_key = locate('fill_' + import_str_filler + '.process_key')
     print 'import result process_key :', process_key
 
     ki = key_interpreter()
