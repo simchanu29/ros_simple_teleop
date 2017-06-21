@@ -1,5 +1,5 @@
 <launch>
-	<rosparam file="launch/keyconfig.yaml" />
+	<rosparam file="$(find ros_teleop)/launch/keyconfig.yaml" />
 
 	<node pkg="ros_teleop" name="key_listener" type="key_listener.py"/>
 
