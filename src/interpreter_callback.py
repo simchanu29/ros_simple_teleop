@@ -20,7 +20,7 @@ def get_val(msg, topic, key_map):
         return None # key that shouldn't be translated in this instance
     elif key_map[msg.data]['topic'] == 'switch_teleop':
         # Si c'est un message interne
-        return 'switch_teleop',
+        return 'switch_teleop'
 
     # Récupération des données
     val = key_map[msg.data]['value']
