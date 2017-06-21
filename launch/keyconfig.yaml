@@ -3,20 +3,20 @@ topic_types:
   'switch_teleop':
     'usage': 'No value'
     'structure': ['type']
-    'import': ['std_msgs.msgs', 'String']
+    'import': ['std_msgs.msg', 'String']
 
   'twist':
     'usage': ['lin_x','lin_y','ang_z']
     'structure': ['type', 'range_lin', 'range_ang', 'precision']
-    'import': ['geometry_msgs.msgs', 'Twist']
+    'import': ['geometry_msgs.msg', 'Twist']
   'wrench':
     'usage': ['lin_x','lin_y','ang_z']
     'structure': ['type', 'range_lin', 'range_ang', 'precision']
-    'import': ['geometry_msgs.msgs', 'Wrench']
+    'import': ['geometry_msgs.msg', 'Wrench']
   'position':
     'usage': 'position'
     'structure': ['type', 'range', 'precision']
-    'import': ['std_msgs.msgs', 'Float32']
+    'import': ['std_msgs.msg', 'Float32']
 
 # Modifiable
 topic_map:
