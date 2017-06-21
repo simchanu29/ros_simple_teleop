@@ -24,12 +24,12 @@ topic_map:
     'type': 'switch_teleop'
 
   'twist':
-    'type': 'vec3'
+    'type': 'twist'
     'range_lin': 10.0
     'range_ang': 10.0
     'precision': 20.0
   'wrench':
-    'type': 'vec3'
+    'type': 'wrench'
     'range_lin': 10.0
     'range_ang': 10.0
     'precision': 20.0

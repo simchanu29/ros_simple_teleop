@@ -36,7 +36,7 @@ if __name__ == '__main__':
     topic_info = topic_map[topic_name]
     topic_types = rospy.get_param('topic_types')
     topic_type = topic_info['type']
-    print 'topic_type :',topic_type
+    print 'topic_type :', topic_type
     import_str_msg = topic_types[topic_type]['import']
     print 'import_str_msg :', import_str_msg
     import_str_filler = topic_type
