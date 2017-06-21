@@ -35,12 +35,12 @@ topic_map:
     'precision': 20.0
   'position_servo1':
     'type': 'position'
-    'range': 90
-    'precision': 100
+    'range': 90.0
+    'precision': 100.0
   'position_servo2':
     'type': 'position'
-    'range': 90
-    'precision': 100
+    'range': 90.0
+    'precision': 100.0
 
 key_map:
   # switch teleop key
