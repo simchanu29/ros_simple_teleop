@@ -61,7 +61,7 @@ if __name__ == '__main__':
     ki = key_interpreter()
 
     # Dynamic publisher
-    cmd_pub = rospy.Publisher('cmd_'+topic_name, Msg_class, queue_size=1)
+    cmd_pub = rospy.Publisher('/cmd_'+topic_name, Msg_class, queue_size=1)
 
     rospy.Subscriber('keys', String, ki.keys_cb, cmd_pub)
 
