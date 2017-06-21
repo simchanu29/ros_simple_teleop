@@ -5,6 +5,6 @@
 
 	<node pkg="ros_teleop" name="key_twist" type="key_interpreter.py" output="screen">
 		<param name="topic_name" value="twist"/>
-	</node><node/>
+	</node>
 
 </launch>
