@@ -12,6 +12,7 @@ class key_interpreter():
 
     def keys_cb(self, msg, twist_pub):
             val = interpreter_callback.get_val(msg, topic_name, key_map)
+            print 'val :', val
             if val is 'switch_teleop':
                 self.cmd.send = not self.cmd.send
             elif val is not None:
