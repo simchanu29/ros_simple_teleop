@@ -28,7 +28,7 @@ twist_turtle:
   precision : 100.0
 ```
 
-De maniere générale, range c'est l'échelle par laquelle on multiplie la commande qui est comprise dans [-1,1]. La précision c'est le facteur par lequel on divise la commande issue de la touche (1 ou -1 habituellement) lors de l'incrémentation de la commande du message. Pour une meilleur compréhension, je conseille de regarder les fichiers fill_xxx.py.
+De maniere générale, range c'est l'échelle par laquelle on multiplie la commande qui est comprise dans [-1,1]. La précision c'est le facteur par lequel on divise la commande issue de la touche (1 ou -1 habituellement) lors de l'incrémentation de la commande du message. Pour une meilleure compréhension, je conseille de regarder les fichiers fill_xxx.py.
 
 2. On définit les touches associées au topic
 
