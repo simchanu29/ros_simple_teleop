@@ -83,28 +83,28 @@ key_map:
 
   # Wrench keys
   '5':
-    topic: 'twist'
+    topic: 'wrench'
     value: ['STOP','STOP','STOP']
   '0':
-    topic: 'twist'
+    topic: 'wrench'
     value: ['BACK','BACK','BACK']
   '8':
-    topic: 'twist'
+    topic: 'wrench'
     value: [1,0,0]
   '2':
-    topic: 'twist'
+    topic: 'wrench'
     value: [-1,0,0]
   '4':
-    topic: 'twist'
+    topic: 'wrench'
     value: [0,1,0]
   '6':
-    topic: 'twist'
+    topic: 'wrench'
     value: [0,-1,0]
   '7':
-    topic: 'twist'
+    topic: 'wrench'
     value: [0,0,1]
   '9':
-    topic: 'twist'
+    topic: 'wrench'
     value: [0,0,-1]
 
   # Position keys
