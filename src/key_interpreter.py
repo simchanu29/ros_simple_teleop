@@ -30,8 +30,10 @@ if __name__ == '__main__':
 
     # Param server
     topic_name = rospy.get_param('~topic_name')
+    print 'topic_name :', topic_name
     key_map = rospy.get_param('key_map')
     topic_map = rospy.get_param('topic_map')
+    print 'topic_map :', topic_map
 
     # Extraction des parametres
     topic_info = topic_map[topic_name]
