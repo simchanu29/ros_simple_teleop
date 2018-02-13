@@ -33,8 +33,8 @@ topic_map:
 
   'twist':
     'type': 'twist'
-    'range_lin': 10.0
-    'range_ang': 10.0
+    'range_lin': 1.0
+    'range_ang': 1.0
     'precision': 20.0
   'wrench':
     'type': 'wrench'
