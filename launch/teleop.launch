@@ -1,19 +1,22 @@
 <launch>
-	<rosparam file="$(find ros_teleop)/launch/keyconfig.yaml" />
 
-	<node pkg="ros_teleop" name="key_listener" type="key_listener.py"/>
+  <arg name="config_path">
 
-	<node pkg="ros_teleop" name="key_twist" type="key_interpreter.py">
-		<param name="topic_name" value="twist"/>
-	</node>
-	<node pkg="ros_teleop" name="key_wrench" type="key_interpreter.py">
-		<param name="topic_name" value="wrench"/>
-	</node>
-	<node pkg="ros_teleop" name="key_servo1" type="key_interpreter.py">
-		<param name="topic_name" value="position_servo1"/>
-	</node>
-	<node pkg="ros_teleop" name="key_servo2" type="key_interpreter.py">
-		<param name="topic_name" value="position_servo2"/>
-	</node>
+  <rosparam file="$(arg config_path)" />
+
+  <node pkg="ros_teleop" name="key_listener" type="key_listener.py"/>
+
+  <node pkg="ros_teleop" name="key_twist" type="key_interpreter.py">
+    <param name="topic_name" value="twist"/>
+  </node>
+  <node pkg="ros_teleop" name="key_wrench" type="key_interpreter.py">
+    <param name="topic_name" value="wrench"/>
+  </node>
+  <node pkg="ros_teleop" name="key_servo1" type="key_interpreter.py">
+    <param name="topic_name" value="position_servo1"/>
+  </node>
+  <node pkg="ros_teleop" name="key_servo2" type="key_interpreter.py">
+     <param name="topic_name" value="position_servo2"/>
+  </node>
 
 </launch>

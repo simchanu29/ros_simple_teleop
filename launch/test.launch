@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find ros_teleop)/launch/teleop.launch">
+    <arg name="config_path" value="$(find ros_teleop)/launch/keyconfig.yaml">
+  </include>
+</launch>
