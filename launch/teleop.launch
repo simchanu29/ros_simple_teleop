@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="config_path">
+  <arg name="config_path"/>
 
   <rosparam file="$(arg config_path)" />
 
