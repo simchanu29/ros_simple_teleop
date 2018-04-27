@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-"/home/pigconf/CHIMAERA/gogs/gogs" hook --config='/home/pigconf/CHIMAERA/gogs/custom/conf/app.ini' pre-receive
