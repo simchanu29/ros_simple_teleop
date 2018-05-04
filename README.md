@@ -3,16 +3,23 @@ Package ros pour la téléopération. Peut publier des messages Twist, Wrench ou
 Version de ROS testée : Kinetic
 
 Ce package a été designé pour la commande de multiple actionneurs sur un robot allant d'une commande en force, en vitesse ou encore en position.
+Voici les types supportés : 
+ - Wrench
+ - Twist
+ - Position (Float32 avec modification additive de la valeur de commande)
+ - Int8
+ - String
 
 ### Installation
-Déplacez vous au sein d'un workspace ROS et clonez ce repository
+
+1. Déplacez vous au sein d'un workspace ROS et clonez ce repository
 `git clone https://github.com/simchanu29/ros_teleop`
-Déplacez vous à la racine du workspace
+2. Déplacez vous à la racine du workspace
 `source devel/setup.bash`
 
 ### Test
 Pour tester le package après installation
-`roslaunch ros_teleop teleop.launch`
+`roslaunch ros_teleop test.launch`
 
 ### Configuration
 L'ensemble du mapping des touches se fait via un fichier de config yaml dans le dossier launcher

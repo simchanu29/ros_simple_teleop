@@ -31,13 +31,13 @@ if __name__ == '__main__':
     # Param server
     topic_name = rospy.get_param('~topic_name')
     print 'topic_name :', topic_name
-    key_map = rospy.get_param('key_map')
-    topic_map = rospy.get_param('topic_map')
+    key_map = rospy.get_param('key_config/key_map')
+    topic_map = rospy.get_param('key_config/topic_map')
     print 'topic_map :', topic_map
 
     # Extraction des parametres
     topic_info = topic_map[topic_name]
-    topic_types = rospy.get_param('topic_types')
+    topic_types = rospy.get_param('key_config/topic_types')
     topic_type = topic_info['type']
     print 'topic_type :', topic_type
     import_str_msg_module = topic_types[topic_type]['import'][0]
