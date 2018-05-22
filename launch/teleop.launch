@@ -7,7 +7,7 @@
     <node pkg="ros_teleop" name="key_listener" type="key_listener.py"/>
 
     <node pkg="ros_teleop" name="key_twist" type="key_interpreter.py">
-        <param name="topic_name" value="twist"/>
+        <param name="topic_name" value="vel"/>
     </node>
 
     <node pkg="ros_teleop" name="key_int" type="key_interpreter.py">
