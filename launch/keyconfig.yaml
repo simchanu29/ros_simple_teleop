@@ -26,17 +26,33 @@ key_config:
       'structure': ['type', 'range', 'precision']
       # Utile pour le code
       'import': ['std_msgs.msg', 'Float32']
+    'int':
+      # Pour rappel
+      'usage': ['value']
+      'structure': ['type']
+      # Utile pour le code
+      'import': ['std_msgs.msg', 'Int8']
+    'string':
+      # Pour rappel
+      'usage': ['value']
+      'structure': ['type']
+      # Utile pour le code
+      'import': ['std_msgs.msg', 'String']
+
 
   # Modifiable
   topic_map:
     'switch_teleop':
       'type': 'switch_teleop'
 
-    'twist':
+    'vel':
       'type': 'twist'
       'range_lin': 1.0
       'range_ang': 1.0
       'precision': 20.0
+
+    'state':
+      'type': 'int'
 
   #  'wrench':
   #    'type': 'wrench'
@@ -59,29 +75,38 @@ key_config:
 
     # Twist keys
     ' ':
-      topic: 'twist'
+      topic: 'vel'
       value: ['STOP','STOP','STOP']
     'r':
-      topic: 'twist'
+      topic: 'vel'
       value: ['BACK','BACK','BACK']
     'z':
-      topic: 'twist'
+      topic: 'vel'
       value: [1,0,0]
     's':
-      topic: 'twist'
+
+      topic: 'vel'
       value: [-1,0,0]
     'q':
-      topic: 'twist'
+      topic: 'vel'
       value: [0,0,1]
     'd':
-      topic: 'twist'
+      topic: 'vel'
       value: [0,0,-1]
     'a':
-      topic: 'twist'
+      topic: 'vel'
       value: [0,0,1]
     'e':
-      topic: 'twist'
+      topic: 'vel'
       value: [0,0,-1]
+
+    # Cmd state keys
+    'm':
+      topic: 'state'
+      value: 0
+    'l':
+      topic: 'state'
+      value: 1
 
     # Wrench keys
   #  '5':
