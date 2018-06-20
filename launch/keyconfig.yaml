@@ -49,7 +49,7 @@ key_config:
       'type': 'twist'
       'range_lin': 1.0
       'range_ang': 1.0
-      'precision': 20.0
+      'precision': 0.2
 
     'state':
       'type': 'int'
