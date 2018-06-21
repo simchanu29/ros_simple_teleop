@@ -15,7 +15,7 @@ def process_key(val, cmd, topic_info):
         elif val == 'STOP':
             cmd = 0.0
     else:
-        cmd += val / topic_info['precision']
+        cmd += val * topic_info['precision']
 
     cmd = max(min(cmd, 1.0), -1.0)
 

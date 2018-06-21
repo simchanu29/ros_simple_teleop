@@ -63,7 +63,9 @@ if __name__ == '__main__':
     ki = key_interpreter()
 
     # Dynamic publisher
-    cmd_pub = rospy.Publisher('/cmd_'+topic_name, Msg_class, queue_size=1)
+    prefix = rospy.get_param('ros_teleop_prefix','')  # Global variable as a prefix
+    localPrefix = rospy.get_param('~ros_teleop_prefix', '')  # Private variable as a prefix
+    cmd_pub = rospy.Publisher(prefix + localPrefix + topic_name, Msg_class, queue_size=1)
 
     rospy.Subscriber('keys', String, ki.keys_cb, cmd_pub)
 

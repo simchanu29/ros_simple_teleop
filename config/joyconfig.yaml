@@ -39,34 +39,19 @@ key_config:
       # Utile pour le code
       'import': ['std_msgs.msg', 'String']
 
-
   # Modifiable
   topic_map:
     'switch_teleop':
       'type': 'switch_teleop'
 
-    'vel':
+    'twist':
       'type': 'twist'
       'range_lin': 1.0
       'range_ang': 1.0
-      'precision': 20.0
+      'precision': 0.2
 
     'state':
       'type': 'int'
-
-  #  'wrench':
-  #    'type': 'wrench'
-  #    'range_lin': 10.0
-  #    'range_ang': 10.0
-  #    'precision': 20.0
-  #  'position_servo1':
-  #    'type': 'position'
-  #    'range': 90.0
-  #    'precision': 100.0
-  #  'position_servo2':
-  #    'type': 'position'
-  #    'range': 90.0
-  #    'precision': 100.0
 
   key_map:
     # switch teleop key
@@ -75,29 +60,28 @@ key_config:
 
     # Twist keys
     ' ':
-      topic: 'vel'
+      topic: 'twist'
       value: ['STOP','STOP','STOP']
     'r':
-      topic: 'vel'
+      topic: 'twist'
       value: ['BACK','BACK','BACK']
     'z':
-      topic: 'vel'
+      topic: 'twist'
       value: [1,0,0]
     's':
-
-      topic: 'vel'
+      topic: 'twist'
       value: [-1,0,0]
     'q':
-      topic: 'vel'
+      topic: 'twist'
       value: [0,0,1]
     'd':
-      topic: 'vel'
+      topic: 'twist'
       value: [0,0,-1]
     'a':
-      topic: 'vel'
+      topic: 'twist'
       value: [0,0,1]
     'e':
-      topic: 'vel'
+      topic: 'twist'
       value: [0,0,-1]
 
     # Cmd state keys
@@ -107,43 +91,3 @@ key_config:
     'l':
       topic: 'state'
       value: 1
-
-    # Wrench keys
-  #  '5':
-  #    topic: 'wrench'
-  #    value: ['STOP','STOP','STOP']
-  #  '0':
-  #    topic: 'wrench'
-  #    value: ['BACK','BACK','BACK']
-  #  '8':
-  #    topic: 'wrench'
-  #    value: [1,0,0]
-  #  '2':
-  #    topic: 'wrench'
-  #    value: [-1,0,0]
-  #  '4':
-  #    topic: 'wrench'
-  #    value: [0,1,0]
-  #  '6':
-  #    topic: 'wrench'
-  #    value: [0,-1,0]
-  #  '7':
-  #    topic: 'wrench'
-  #    value: [0,0,1]
-  #  '9':
-  #    topic: 'wrench'
-  #    value: [0,0,-1]
-  #
-  #  # Position keys
-  #  'y':
-  #    topic: position_servo1
-  #    value: 1
-  #  'h':
-  #    topic: position_servo1
-  #    value: -1
-  #  'g':
-  #    topic: position_servo2
-  #    value: 1
-  #  'j':
-  #    topic: position_servo2
-  #    value: -1
