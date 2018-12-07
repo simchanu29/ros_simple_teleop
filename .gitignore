@@ -26,6 +26,9 @@ msg/_*.py
 .project
 .cproject
 
+# jetbrains stuff
+.idea
+
 # qcreator stuff
 CMakeLists.txt.user
 
@@ -46,4 +49,3 @@ qtcreator-*
 
 # Catkin custom files
 CATKIN_IGNORE
-
