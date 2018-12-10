@@ -8,43 +8,50 @@ import interpreter_callback
 
 class key_interpreter():
     def __init__(self):
-        self.cmd = Command()
+        self.cmd = Command(interpreter_info)
 
     def keys_cb(self, msg, twist_pub):
-            val = interpreter_callback.get_val(msg, topic_name, key_map)
+            val = interpreter_callback.get_val(msg, interpreter_name, key_map)
             print 'val :', val
             if val is 'switch_teleop':
                 self.cmd.send = not self.cmd.send
+                if self.cmd.send:
+                    rospy.logwarn('TELEOP ARMED [{}]'.format(interpreter_name))
+                else:
+                    rospy.logwarn('TELEOP UNARMED [{}]'.format(interpreter_name))
             elif val is not None:
-                self.cmd.val = process_key(val, self.cmd.val, topic_info)
+                # Fonction process du fichier importé automatiquement a partir de la config
+                self.cmd.val = process_key(val, self.cmd.val, interpreter_info)
 
                 if self.cmd.send:
-                    msg = fill_msg(self.cmd, topic_info)
+                    msg = fill_msg(self.cmd, interpreter_info)
 
                     # Publish
                     cmd_pub.publish(msg)
 
 
 if __name__ == '__main__':
-    rospy.init_node('keys_to_twist')
+    rospy.init_node('key_interpreter')
 
     # Param server
     topic_name = rospy.get_param('~topic_name')
+    interpreter_name = rospy.get_param('~interpreter_name')
     print 'topic_name :', topic_name
+    print 'interpreter_name :', interpreter_name
     key_map = rospy.get_param('key_config/key_map')
-    topic_map = rospy.get_param('key_config/topic_map')
-    print 'topic_map :', topic_map
+    interpreter_config_map = rospy.get_param('key_config/interpreter_config_map')
+    print 'interpreter_config_map :', interpreter_config_map
 
     # Extraction des parametres
-    topic_info = topic_map[topic_name]
-    topic_types = rospy.get_param('key_config/topic_types')
-    topic_type = topic_info['type']
-    print 'topic_type :', topic_type
-    import_str_msg_module = topic_types[topic_type]['import'][0]
+    interpreter_info = interpreter_config_map[interpreter_name]
+    interpreter_types = rospy.get_param('key_config/interpreter_types')
+    interpreter_type = interpreter_info['type']
+    print 'interpreter_type :', interpreter_type
+    import_str_msg_module = interpreter_types[interpreter_type]['import'][0]
     print 'import_str_msg_module :', import_str_msg_module
-    import_str_msg_class = topic_types[topic_type]['import'][1]
+    import_str_msg_class = interpreter_types[interpreter_type]['import'][1]
     print 'import_str_msg_class :', import_str_msg_class
-    import_str_filler = topic_type
+    import_str_filler = interpreter_type
     print 'import_str_filler :', import_str_filler
 
     # Dynamic import
@@ -63,8 +70,8 @@ if __name__ == '__main__':
     ki = key_interpreter()
 
     # Dynamic publisher
-    prefix = rospy.get_param('ros_teleop_prefix','')  # Global variable as a prefix
-    localPrefix = rospy.get_param('~ros_teleop_prefix', '')  # Private variable as a prefix
+    prefix = rospy.get_param('teleop_prefix','')  # Global variable as a prefix
+    localPrefix = rospy.get_param('~teleop_prefix', '')  # Private variable as a prefix
     cmd_pub = rospy.Publisher(prefix + localPrefix + topic_name, Msg_class, queue_size=1)
 
     rospy.Subscriber('keys', String, ki.keys_cb, cmd_pub)
