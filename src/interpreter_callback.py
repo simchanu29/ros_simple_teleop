@@ -16,7 +16,7 @@ def get_val(msg, called_interpreter, key_map):
         return None  # unknown key
     elif (key_map[msg.data]['called_interpreter'] != called_interpreter) \
             and (key_map[msg.data]['called_interpreter'] != 'switch_teleop'):
-        print "key that shouldn't be translated in this instance :", key_map[msg.data]['called_interpreter'], called_interpreter
+        # print "key that shouldn't be translated in this instance :", key_map[msg.data]['called_interpreter'], called_interpreter
         return None  # key that shouldn't be translated in this instance
     elif key_map[msg.data]['called_interpreter'] == 'switch_teleop':
         # Si c'est un message interne

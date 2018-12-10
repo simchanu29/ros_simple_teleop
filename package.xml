@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package>
+<package format="2">
   <name>simple-teleop</name>
   <version>1.0.0</version>
   <description>The simple-teleop package</description>
@@ -24,6 +24,9 @@
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
 
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>joy</depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

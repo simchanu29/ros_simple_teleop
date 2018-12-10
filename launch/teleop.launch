@@ -4,6 +4,11 @@
 
     <rosparam file="$(arg config_path)"/>
 
+    # joy listener
+    <include file="$(find joy)/launch/ps4joy.launch"/>
+    <node pkg="simple-teleop" name="joy_interpreter" type="joy_interpreter.py"/>
+
+    # keyboard listener
     <node pkg="simple-teleop" name="key_listener" type="key_listener.py"/>
 
     <node pkg="simple-teleop" name="key_twist" type="key_interpreter.py">
