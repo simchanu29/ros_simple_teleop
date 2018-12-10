@@ -5,7 +5,7 @@ from std_msgs.msg import String
 
 if __name__ == '__main__':
 
-    key_pub = rospy.Publisher('keys', String, queue_size=1)
+    key_pub = rospy.Publisher('keys', String, queue_size=100)
     rospy.init_node("key_listener")
     rate = rospy.Rate(100)
     old_attr = termios.tcgetattr(sys.stdin)

@@ -155,3 +155,76 @@ key_config:
   #  'j':
   #    called_interpreter: position_servo2
   #    value: -1
+
+  # Proxy config manette DRAKKAR
+  joystick:
+    config:
+      stick_gauche:
+        horizontal:
+          twist_axis: 'y'
+          gain: 2
+        vertical:
+          twist_axis: 'x'
+          gain: 2
+      stick_droit:
+        horizontal:
+          twist_axis: 'yaw'
+          gain: 1
+        vertical:
+          twist_axis: 'pitch'
+          gain: 1
+      fleches:
+        horizontal:
+          twist_axis: 'roll'
+          gain: 1
+        vertical:
+          twist_axis: 'z'
+          gain: 1
+    axes:
+      '0':  # StickGaucheGauche+Droite-
+        type: 'stick_gauche'
+        axe: 'horizontal'  # horizontal ou vertical
+      '1':  # StickGaucheHaut+Bas-
+        type: 'stick_gauche'
+        axe: 'vertical'  # horizontal ou vertical
+      '2':  # -1 = L2
+        type: 'axe_button'
+        key: None
+      '3':  # StickDroiteGauche+Droite-
+        type: 'stick_droit'
+        axe: 'horizontal'  # horizontal ou vertical
+      '4':  # StickDroiteHaut+Bas-
+        type: 'stick_droit'
+        axe: 'vertical'  # horizontal ou vertical
+      '5':  # -1 = R2
+        type: 'axe_button'
+        key: None
+      '6':  # FlecheGauche+Droite-
+        type: 'fleches'
+        axe: 'horizontal'  # horizontal ou vertical
+      '7':  # FlecheHaut+Bas-
+        type: 'fleches'
+        axe: 'vertical'  # horizontal ou vertical
+    buttons:
+      '0':  # BoutonDroiteBas
+        key: None
+      '1':  # BoutonDroiteDroite
+        key: None
+      '2':  # BoutonDroiteGauche
+        key: None
+      '3':  # BoutonDroiteHaut
+        key: None
+      '4':  # L1
+        key: None
+      '5':  # R1
+        key: None
+      '6':  # Select
+        key: None
+      '7':  # Start
+        key: 't'
+      '8':  # None
+        key: None
+      '9':  # StickGaucheButton
+        key: None
+      '10':  # StickDroiteButton
+        key: None
