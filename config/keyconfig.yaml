@@ -35,13 +35,13 @@ key_config:
     'bool_toogle':
       # Pour rappel
       'usage': ['value']
-      'structure': ['type', 'value']
+      'structure': ['type']
       # Utile pour le code
       'import': ['std_msgs.msg', 'Bool']
     'string':
       # Pour rappel
       'usage': ['value']
-      'structure': ['type', 'string']
+      'structure': ['type']
       # Utile pour le code
       'import': ['std_msgs.msg', 'String']
 
