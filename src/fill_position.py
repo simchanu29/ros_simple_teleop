@@ -17,7 +17,7 @@ def process_key(val, cmd, interpreter_info):
     else:
         cmd += val * interpreter_info['precision']
 
-    # Bornage de -1 à 1
+    # Bornage de -1 a 1
     cmd = max(min(cmd, 1.0), -1.0)
 
     return cmd
