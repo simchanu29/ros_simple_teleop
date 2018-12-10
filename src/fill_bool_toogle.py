@@ -5,7 +5,7 @@ from interpreter_callback import CommandParent
 class Command(CommandParent):
     def __init__(self, interpreter_info):
         CommandParent.__init__(self)
-        self.val = False
+        self.val = interpreter_info['init_val']
 
 
 def process_key(val, cmd, interpreter_info):
