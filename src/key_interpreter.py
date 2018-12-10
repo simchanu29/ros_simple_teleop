@@ -9,6 +9,7 @@ import interpreter_callback
 class key_interpreter():
     def __init__(self):
         self.cmd = Command(interpreter_info)
+        self.cmd.time = rospy.Time.now()
 
     def keys_cb(self, msg, twist_pub):
             val = interpreter_callback.get_val(msg, interpreter_name, key_map)
@@ -24,6 +25,7 @@ class key_interpreter():
                 self.cmd.val = process_key(val, self.cmd.val, interpreter_info)
 
                 if self.cmd.send:
+                    self.cmd.time = rospy.Time.now()
                     msg = fill_msg(self.cmd, interpreter_info)
 
                     # Publish

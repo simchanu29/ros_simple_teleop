@@ -1,4 +1,4 @@
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 from interpreter_callback import CommandParent
 
 
@@ -24,11 +24,11 @@ def process_key(val, cmd, interpreter_info):
 
 
 def fill_msg(cmd, interpreter_info):
-    msg = Float32()
+    msg = Float64()
     min_cmd = float(interpreter_info['min'])
     max_cmd = float(interpreter_info['max'])
-    range_cmd = max_cmd - min_cmd
-    offset = range_cmd/2.0 + min_cmd
+    range_cmd = (max_cmd - min_cmd)/2.0  # car de -1 a 1 ca fait range = 2
+    offset = range_cmd + min_cmd
 
     msg.data = cmd.val * range_cmd + offset
     return msg

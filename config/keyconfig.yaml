@@ -25,7 +25,7 @@ key_config:
       'usage': 'position'
       'structure': ['type', 'min', 'max', 'precision']
       # Utile pour le code
-      'import': ['std_msgs.msg', 'Float32']
+      'import': ['std_msgs.msg', 'Float64']
     'int':
       # Pour rappel
       'usage': ['value']
@@ -158,27 +158,29 @@ key_config:
 
   # Proxy config manette DRAKKAR
   joystick:
-    config:
+    sticks_config:
+      topic_type: 'WrenchStamped'
+    sticks:
       stick_gauche:
         horizontal:
-          twist_axis: 'y'
+          cmd_axis: 'y'
           gain: 2
         vertical:
-          twist_axis: 'x'
+          cmd_axis: 'x'
           gain: 2
       stick_droit:
         horizontal:
-          twist_axis: 'yaw'
+          cmd_axis: 'yaw'
           gain: 1
         vertical:
-          twist_axis: 'pitch'
+          cmd_axis: 'pitch'
           gain: 1
       fleches:
         horizontal:
-          twist_axis: 'roll'
+          cmd_axis: 'roll'
           gain: 1
         vertical:
-          twist_axis: 'z'
+          cmd_axis: 'z'
           gain: 1
     axes:
       '0':  # StickGaucheGauche+Droite-

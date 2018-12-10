@@ -4,6 +4,7 @@
 class CommandParent:
     def __init__(self):
         self.send = True
+        self.time = 0
 
 
 def get_val(msg, called_interpreter, key_map):
