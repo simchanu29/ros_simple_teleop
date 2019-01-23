@@ -6,6 +6,7 @@
 
     # joy listener
     <include file="$(find joy)/launch/ps4joy.launch"/>
+    <node pkg="joy" name="joy_driver" type="joy_node"/>
     <node pkg="simple-teleop" name="joy_interpreter" type="joy_interpreter.py"/>
 
     # keyboard listener
