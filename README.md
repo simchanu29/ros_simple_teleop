@@ -23,7 +23,7 @@ Pour tester le package après installation
 
 ### Configuration
 L'ensemble du mapping des touches se fait via un fichier de config yaml dans le dossier "config"
-Le principe est le suivant : 
+Le principe est le suivant :
 
 1. On définit les interpréteurs de commande qui vont être créé. Ces interpréteurs peuvent être de différents types exprimés au dessus. On peut alors spécifier les paramètres de ces interpréteurs.
 
@@ -40,7 +40,7 @@ De maniere générale, range c'est l'échelle par laquelle on multiplie la comma
 
 2. On définit les touches associées au topic
 
-Par exemple pour avancer ou reculer : 
+Par exemple pour avancer ou reculer :
 ```
 'a':
   called_interpreter: 'twist_turtle'
