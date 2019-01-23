@@ -4,14 +4,21 @@
 
     <rosparam file="$(arg config_path)"/>
 
-    <node pkg="ros_teleop" name="key_listener" type="key_listener.py"/>
+    # joy listener
+    <include file="$(find joy)/launch/ps4joy.launch"/>
+    <node pkg="simple-teleop" name="joy_interpreter" type="joy_interpreter.py"/>
 
-    <node pkg="ros_teleop" name="key_twist" type="key_interpreter.py">
+    # keyboard listener
+    <node pkg="simple-teleop" name="key_listener" type="key_listener.py"/>
+
+    <node pkg="simple-teleop" name="key_twist" type="key_interpreter.py">
         <param name="topic_name" value="vel"/>
+        <param name="interpreter_name" value="vel"/>
     </node>
 
-    <node pkg="ros_teleop" name="key_int" type="key_interpreter.py">
+    <node pkg="simple-teleop" name="key_int" type="key_interpreter.py">
         <param name="topic_name" value="state"/>
+        <param name="interpreter_name" value="state"/>
     </node>
 
     <!--<node pkg="ros_teleop" name="key_wrench" type="key_interpreter.py">-->

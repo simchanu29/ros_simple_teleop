@@ -1,9 +1,9 @@
-# ros_teleop
+# simple-teleop
 Package ros pour la téléopération. Peut publier des messages Twist, Wrench ou Float32 suivant les besoins.
 Version de ROS testée : Kinetic
 
 Ce package a été designé pour la commande de multiple actionneurs sur un robot allant d'une commande en force, en vitesse ou encore en position.
-Voici les types supportés : 
+Voici les types supportés :
  - Wrench
  - Twist
  - Position (Float32 avec modification additive de la valeur de commande)
@@ -19,18 +19,18 @@ Voici les types supportés :
 
 ### Test
 Pour tester le package après installation
-`roslaunch ros_teleop test.launch`
+`roslaunch simple-teleop test.launch`
 
 ### Configuration
 L'ensemble du mapping des touches se fait via un fichier de config yaml dans le dossier "config"
-Le principe est le suivant : 
+Le principe est le suivant :
 
-1. On définit les topics qui vont être écouté. Ces topics peuvent être de différents types exprimés au dessus. On peut alors spécifier les paramètres de ces topics. 
+1. On définit les interpréteurs de commande qui vont être créé. Ces interpréteurs peuvent être de différents types exprimés au dessus. On peut alors spécifier les paramètres de ces interpréteurs.
 
-Par exemple, pour commander le robot turtle avec un message twist, on pourrait créer le topic suivant : 
-``` 
-twist_turtle:
-  type: twist
+Par exemple, pour commander le robot turtle avec un message twist, on pourrait créer l'interpréteur suivant :
+```
+twist_turtle:  # nom de l'interpréteur
+  type: twist  # type de message envoyé par l'interpréteur
   range_lin: 20.0
   range_ang: 20.0
   precision : 100.0
@@ -40,13 +40,13 @@ De maniere générale, range c'est l'échelle par laquelle on multiplie la comma
 
 2. On définit les touches associées au topic
 
-Par exemple pour avancer ou reculer : 
+Par exemple pour avancer ou reculer :
 ```
 'a':
-  topic: 'twist_turtle'
+  called_interpreter: 'twist_turtle'
   value: [1,0,0]
 
 'b':
-  topic: 'twist_turtle'
+  called_interpreter: 'twist_turtle'
   value: [-1,0,0]
 ```
