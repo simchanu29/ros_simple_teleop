@@ -1,4 +1,6 @@
-# simple-teleop
+# simple_teleop
+**ATTENTION :** le prefix ros devant le nom du repository est là pour permettre de trier facilement les repository. Il ets différent du nom du package qui est lui : `simple_teleop`
+
 Package ros pour la téléopération. Peut publier des messages Twist, Wrench ou Float32 suivant les besoins.
 Version de ROS testée : Kinetic
 
@@ -13,13 +15,13 @@ Voici les types supportés :
 ### Installation
 
 1. Déplacez vous au sein d'un workspace ROS et clonez ce repository
-`git clone https://github.com/simchanu29/ros_teleop`
+`git clone https://github.com/simchanu29/ros_simple_teleop simple_teleop`
 2. Déplacez vous à la racine du workspace
 `source devel/setup.bash`
 
 ### Test
 Pour tester le package après installation
-`roslaunch simple-teleop test.launch`
+`roslaunch simple_teleop test.launch`
 
 ### Configuration
 L'ensemble du mapping des touches se fait via un fichier de config yaml dans le dossier "config"
