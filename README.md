@@ -1,5 +1,5 @@
 # simple_teleop
-**ATTENTION :** le prefix ros devant le nom du repository est là pour permettre de trier facilement les repository. Il ets différent du nom du package qui est lui : `simple_teleop`
+**ATTENTION :** le prefix ros devant le nom du repository est là pour permettre de trier facilement les repository. Il est différent du nom du package qui est lui : `simple_teleop`
 
 Package ros pour la téléopération. Peut publier des messages Twist, Wrench ou Float32 suivant les besoins.
 Version de ROS testée : Kinetic
