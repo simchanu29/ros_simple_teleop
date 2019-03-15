@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>simple-teleop</name>
+  <name>simple_teleop</name>
   <version>1.0.0</version>
-  <description>The simple-teleop package</description>
+  <description>The simple_teleop package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
