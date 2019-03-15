@@ -1,16 +1,19 @@
 # simple_teleop
-**ATTENTION :** le prefix ros devant le nom du repository est là pour permettre de trier facilement les repository. Il est différent du nom du package qui est lui : `simple_teleop`
 
 Package ros pour la téléopération. Peut publier des messages Twist, Wrench ou Float32 suivant les besoins.
 Version de ROS testée : Kinetic
 
 Ce package a été développé pour la commande de multiples actionneurs sur un robot allant d'une commande en force, en vitesse ou encore en position.
-Voici les types supportés : 
+Voici les types supportés :
  - Wrench
  - Twist
  - Position (Float32 avec modification additive de la valeur de commande)
  - Int8
  - String
+
+### Préambule
+ - le prefix ros devant le nom du repository est là pour permettre de trier facilement les repository. Il est différent du nom du package qui est lui : `simple_teleop`
+ - Ce package dispose d'une interface vers le package de gestion de joystick : `Joy`. Dans le launchfile de test cette interface est testée, par conséquent il est nécessaire de télécharger le package `Joy` pour lancer `test.launch`. Ce téléchargement intervient automatiquement si vous suivez les étapes d'installation ci-dessous.
 
 ### Installation
 
@@ -18,6 +21,7 @@ Voici les types supportés :
 `git clone https://github.com/simchanu29/ros_simple_teleop simple_teleop`
 2. Déplacez vous à la racine du workspace
 `source devel/setup.bash`
+3. Résolvez les dépendances : `rosdep install simple_teleop` (cela va probablement lancer l'install du package ROS `joy`)
 
 ### Test
 Pour tester le package après installation
