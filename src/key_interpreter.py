@@ -2,7 +2,7 @@
 # coding=utf-8
 import rospy
 from pydoc import locate
-from std_msgs.msg import String
+from std_msgs.msg import String, Bool
 import interpreter_callback
 
 
@@ -11,26 +11,23 @@ class key_interpreter():
         self.cmd = Command(interpreter_info)
         self.cmd.time = rospy.Time.now()
 
+    def enable_cb(self, msg):
+        self.cmd.send = msg.data
+
     def keys_cb(self, msg, twist_pub):
+        if self.cmd.send:
             val = interpreter_callback.get_val(msg, interpreter_name, key_map)
             print 'val :', val
-            if val is 'switch_teleop':
-                self.cmd.send = not self.cmd.send
-                if self.cmd.send:
-                    rospy.logwarn('TELEOP ARMED [{}]'.format(interpreter_name))
-                else:
-                    rospy.logwarn('TELEOP UNARMED [{}]'.format(interpreter_name))
-            elif val is not None:
+
+            if val is not None and val is not 'switch_teleop':
                 # Fonction process du fichier importé automatiquement a partir de la config
                 self.cmd.val = process_key(val, self.cmd.val, interpreter_info)
 
-                if self.cmd.send:
-                    self.cmd.time = rospy.Time.now()
-                    msg = fill_msg(self.cmd, interpreter_info)
+                self.cmd.time = rospy.Time.now()
+                msg = fill_msg(self.cmd, interpreter_info)
 
-                    # Publish
-                    cmd_pub.publish(msg)
-
+                # Publish
+                cmd_pub.publish(msg)
 
 if __name__ == '__main__':
     rospy.init_node('key_interpreter')
@@ -77,5 +74,6 @@ if __name__ == '__main__':
     cmd_pub = rospy.Publisher(prefix + localPrefix + topic_name, Msg_class, queue_size=100)
 
     rospy.Subscriber('keys', String, ki.keys_cb, cmd_pub)
+    rospy.Subscriber('enable', Bool, ki.enable_cb)
 
     rospy.spin()

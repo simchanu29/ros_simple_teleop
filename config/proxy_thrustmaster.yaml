@@ -1,0 +1,76 @@
+# Proxy config joystick thrustmaster
+joystick_config:
+  sticks_config: # Hardcoded
+    topic_type: 'WrenchStamped' # Hardcoded
+  sticks: # Hardcoded
+    joystick: # Modifiable
+      pitch:
+        cmd_axis: 'pitch'
+        gain: 10
+      y:
+        cmd_axis: 'y'
+        gain: 10
+      yaw:
+        cmd_axis: 'yaw'
+        gain: 10
+    manette_gauche:  # Modifiable
+      throttle:
+        cmd_axis: 'x'
+        gain: 10
+      palan:
+        cmd_axis: 'z'
+        gain: 10
+    joystick_stick:  # Modifiable
+      horizontal:
+        cmd_axis: 'roll'
+        gain: 10
+      vertical:
+        cmd_axis: 'roll'
+        gain: 10
+  axes:
+    '0':
+      type: 'joystick'
+      axe: 'y'
+    '1':
+      type: 'joystick'
+      axe: 'pitch'
+    '2':
+      type: 'manette_gauche'
+      axe: 'throttle'
+    '3':
+      type: 'joystick'
+      axe: 'yaw'
+    '4':
+      type: 'axes_button'
+      key: None
+    '5':
+      type: 'axes_button'
+      key: None
+    '6':
+      type: 'axes_button'
+      key: None
+  buttons:
+    '0':
+      key: None
+    '1':
+      key: 't'
+    '2':
+      key: None
+    '3':
+      key: None
+    '4':
+      key: 'b'
+    '5':
+      key: 'n'
+    '6':
+      key: 'h'
+    '7':
+      key: None
+    '8':
+      key: 'f'
+    '9':
+      key: 'r'
+    '10':
+      key: None
+    '11':
+      key: None

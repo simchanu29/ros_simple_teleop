@@ -1,0 +1,60 @@
+<launch>
+    <group ns="teleop">
+
+      <rosparam file="$(find station-surface-vehicule)/config/simple-teleop/keyconfig.yaml"/>
+      <rosparam file="$(find station-surface-vehicule)/config/simple-teleop/proxy_thrustmaster.yaml"/>      
+
+      # joy listener
+      <node name="joy_listener" pkg="joy" type="joy_node">
+          <param name="dev" value="/dev/input/js0"/>
+      </node>
+
+      # keyboard listener
+      <node pkg="simple_teleop" name="key_listener" type="key_listener.py"/>
+
+      # Enabler
+      <node pkg="simple_teleop" name="teleop_switch" type="enable_teleop.py"/>
+
+      # Interpreter
+      <node pkg="simple_teleop" name="joy_interpreter" type="joy_interpreter.py" output="screen">
+        <param name="stick_topic" value="/thrusters/cmd"/>
+      </node>
+
+
+      <node pkg="simple_teleop" name="key_wrench" type="key_interpreter.py">
+          <param name="topic_name" value="/thrusters/cmd"/>
+          <param name="interpreter_name" value="wrench"/>
+      </node>
+
+      <node pkg="simple_teleop" name="key_carriage" type="key_interpreter.py">
+          <param name="topic_name" value="/carriage/man_ctrl"/>
+          <param name="interpreter_name" value="position_carriage"/>
+      </node>
+
+      <node pkg="simple_teleop" name="key_carriage_enable_auto" type="key_interpreter.py">
+          <param name="topic_name" value="/carriage/enable_auto"/>
+          <param name="interpreter_name" value="bool_enable_carriage_auto"/>
+      </node>
+
+      <node pkg="simple_teleop" name="key_autopilot_enable" type="key_interpreter.py">
+          <param name="topic_name" value="/autopilot/enable"/>
+          <param name="interpreter_name" value="bool_enable_autopilot"/>
+      </node>
+
+      <node pkg="simple_teleop" name="key_thrusters_enable" type="key_interpreter.py">
+          <param name="topic_name" value="/thrusters/enable"/>
+          <param name="interpreter_name" value="bool_enable_thrusters"/>
+      </node>
+
+      <node pkg="simple_teleop" name="key_battery_enable" type="key_interpreter.py">
+          <param name="topic_name" value="/battery_puis/switch"/>
+          <param name="interpreter_name" value="bool_enable_battery"/>
+      </node>
+
+      <node pkg="simple_teleop" name="key_carriage_enable" type="key_interpreter.py">
+          <param name="topic_name" value="/carriage/enable"/>
+          <param name="interpreter_name" value="bool_enable_carriage"/>
+      </node>
+
+    </group>
+</launch>
