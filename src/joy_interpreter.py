@@ -96,9 +96,9 @@ class joy_interpreter():
                                 if cmd_axis_to_fill == 'roll':
                                     cmd_ang.x = axes[i] * float(config_gain)
                                 if cmd_axis_to_fill == 'pitch':
-                                    cmd_ang.y = axes[i] * float(config_gain)
+                                    cmd_ang.y = - axes[i] * float(config_gain)
                                 if cmd_axis_to_fill == 'yaw':
-                                    cmd_ang.z = axes[i] * float(config_gain)
+                                    cmd_ang.z = - axes[i] * float(config_gain)
 
             # Stockage des valeurs
             self.update_cmd(cmd_lin, cmd_ang)
