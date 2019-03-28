@@ -84,21 +84,23 @@ class joy_interpreter():
 
                                 cmd_axis_to_fill = config_stick[axis]['cmd_axis']
                                 config_gain = self.config['sticks'][stick][axis]['gain']
+                                config_offset = self.config['sticks'][stick][axis]['offset']
+
 
                                 # print("filling axis {} on entry {}".format(cmd_axis_to_fill, i_str))
 
                                 if cmd_axis_to_fill == 'x':
-                                    cmd_lin.x = axes[i] * float(config_gain)
+                                    cmd_lin.x = axes[i] * float(config_gain) + float(config_offset)
                                 if cmd_axis_to_fill == 'y':
-                                    cmd_lin.y = axes[i] * float(config_gain)
+                                    cmd_lin.y = axes[i] * float(config_gain) + float(config_offset)
                                 if cmd_axis_to_fill == 'z':
-                                    cmd_lin.z = axes[i] * float(config_gain)
+                                    cmd_lin.z = axes[i] * float(config_gain) + float(config_offset)
                                 if cmd_axis_to_fill == 'roll':
-                                    cmd_ang.x = axes[i] * float(config_gain)
+                                    cmd_ang.x = axes[i] * float(config_gain) + float(config_offset)
                                 if cmd_axis_to_fill == 'pitch':
-                                    cmd_ang.y = axes[i] * float(config_gain)
+                                    cmd_ang.y = axes[i] * float(config_gain) + float(config_offset)
                                 if cmd_axis_to_fill == 'yaw':
-                                    cmd_ang.z = axes[i] * float(config_gain)
+                                    cmd_ang.z = axes[i] * float(config_gain) + float(config_offset)
 
             # Stockage des valeurs
             self.update_cmd(cmd_lin, cmd_ang)
