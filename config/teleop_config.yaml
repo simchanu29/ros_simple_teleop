@@ -1,0 +1,138 @@
+# coding=utf-8
+
+# teleop_config:
+  # Interpreter Types :
+    # 'twist':
+      # Check fill_twist.py to verify usage and structure
+      # usage: ['lin_x','lin_y','ang_z']
+      # structure: ['type', 'topic', 'range_lin', 'range_ang', 'key_precision']
+      #
+    # 'wrench':
+      # Check fill_wrench.py to verify usage and structure
+      # usage: ['lin_x','lin_y','ang_z']
+      # structure: ['type', 'topic', 'range_lin', 'range_ang', 'key_precision']
+      #
+    # 'wrenchStamped':
+      # Check fill_wrench.py to verify usage and structure
+      # usage: ['lin_x','lin_y','ang_z']
+      # structure: ['type', 'topic', 'range_lin', 'range_ang', 'key_precision']
+      #
+    # 'position':
+      # Check fill_position.py to verify usage and structure
+      # usage: 'position'
+      # structure: ['type', 'topic', 'min', 'max', 'key_precision']
+      #
+    # 'int':
+      # Check fill_int.py to verify usage and structure
+      # usage: ['value']
+      # structure: ['type']
+      #
+    # 'bool_toogle':
+      # Check fill_bool_toogle.py to verify usage and structure
+      # usage: ['value']
+      # structure: ['type']
+      #
+    # 'string':
+      # Check fill_string.py to verify usage and structure
+      # usage: ['value']
+      # structure: ['type']
+      #
+
+# A part switch_teleop, tout est personalisable dans cette section
+# Se referer a l'aide au dessus pour que les champs de donnes soient coherent
+teleop_interpreters:
+
+# 'switch_teleop': toggle on of off the teleoperation
+#                  Is accessible but can't be configured by user
+
+  'vel':
+    'type': 'twist'
+    'topic': '/cmd_vel'
+    'range_lin': 1.0
+    'range_ang': 1.0
+    'key_precision': 0.2
+
+  'state':
+    'type': 'int8'
+    'topic': '/state'
+
+  'carriage':
+    'type': 'position'
+    'topic': '/man_ctrl'
+    'min': 1.0
+    'max': 37.0
+    'key_precision': 0.2
+
+  'prop':
+    'type': 'wrenchStamped'
+    'topic': '/thruster_cmd'
+    'range_lin': 1.0
+    'range_ang': 1.0
+    'key_precision': 0.2
+
+teleop_key_map:
+  # switch teleop key (ON/OFF)
+  't':
+    called_interpreter: 'switch_teleop'
+
+  # Twist keys
+  ' ':
+    called_interpreter: 'vel'
+    value: ['ALL', 'STOP'] # -1 = all
+  'r':
+    called_interpreter: 'vel'
+    value: ['ALL', 'BACK'] # -1 = all
+  'z':
+    called_interpreter: 'vel'
+    value: [0,1]
+  's':
+
+    called_interpreter: 'vel'
+    value: [0,-1]
+  'q':
+    called_interpreter: 'vel'
+    value: [1,1]
+  'd':
+    called_interpreter: 'vel'
+    value: [1,-1]
+  'a':
+    called_interpreter: 'vel'
+    value: [2,1]
+  'e':
+    called_interpreter: 'vel'
+    value: [2,-1]
+
+  # Cmd state keys
+  'm':
+    called_interpreter: 'state'
+    value: 0
+  'l':
+    called_interpreter: 'state'
+    value: 1
+
+teleop_joy_map:
+  axes:
+    '0':
+      called_interpreter: 'prop'
+      value: [1, 1] # position of the modified item in table, value sent
+    '1':
+      called_interpreter: 'prop'
+      value: [4, 1] # position of the modified item in table, value sent
+    '2':
+      called_interpreter: 'prop'
+      value: [0, 1] # position of the modified item in table, value sent
+    '3':
+      called_interpreter: 'prop'
+      value: [5, 1] # position of the modified item in table, value sent
+    '5':
+      called_interpreter: 'prop'
+      value: [3, 1] # position of the modified item in table, value sent
+    '6':
+      called_interpreter: 'prop'
+      value: [2, 1] # position of the modified item in table, value sent
+    '4':
+      called_interpreter: 'carriage'
+      # If no value, then the raw value is given to the interpreter
+  buttons:
+    '1':
+      called_interpreter: 'switch_teleop'

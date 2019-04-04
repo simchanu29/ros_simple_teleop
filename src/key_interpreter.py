@@ -3,77 +3,113 @@
 import rospy
 from pydoc import locate
 from std_msgs.msg import String, Bool
-import interpreter_callback
+from sensor_msgs.msg import Joy
+import numpy as np
+
+class InterpreterInterface:
+    def __init__(self, config):
+        self._config = config
+        self.interpreter = self.import_filler()
+
+    def import_filler(self):
+        interpreter_type = self._config['type']
+
+        # Dynamic import
+        # Ros is bound to import only
+        obj_module = __import__('message_handler.Interpreter_'+interpreter_type, fromlist=['Interpreter_'+interpreter_type])
+        Interpreter = getattr(obj_module, 'Interpreter_'+interpreter_type)
+        print('import result :', Interpreter)
+
+        interpreter_instance = Interpreter(self._config)
+        # print('Return interpreter instance : ', interpreter_instance.name)
+        return interpreter_instance
+
+    def process_input(self, val, cmd_type):
+        # Gère et publie la valeur sur le bon topic
+        self.interpreter.process_input(val, cmd_type)
 
 
-class key_interpreter():
-    def __init__(self):
-        self.cmd = Command(interpreter_info)
-        self.cmd.time = rospy.Time.now()
+class InputRouter:
+    def __init__(self, interpreters_config, key_config, joy_config):
 
-    def enable_cb(self, msg):
-        self.cmd.send = msg.data
+        self._key_config = key_config
+        self._joy_config = joy_config
+        self._enable = True
 
-    def keys_cb(self, msg, twist_pub):
-        if self.cmd.send:
-            val = interpreter_callback.get_val(msg, interpreter_name, key_map)
-            print 'val :', val
+        self.interpreters = {}
+        # Ces interpreteurs sont associés à un script python. Il peut y avoir plusieurs instances nommées séparéments
 
-            if val is not None and val is not 'switch_teleop':
-                # Fonction process du fichier importé automatiquement a partir de la config
-                self.cmd.val = process_key(val, self.cmd.val, interpreter_info)
+        for interpreter_config in interpreters_config:
+            # Crée l'objet interpreter et lui fournis sa config
+            self.interpreters[interpreter_config] = InterpreterInterface(interpreters_config[interpreter_config])
 
-                self.cmd.time = rospy.Time.now()
-                msg = fill_msg(self.cmd, interpreter_info)
+    def route_key(self, key_msg):
+        if self._enable:
+            key = key_msg.data
 
-                # Publish
-                cmd_pub.publish(msg)
+            if key in self._key_config:
+                called_interpreter = self._key_config[key]['called_interpreter']
+                if called_interpreter != 'switch_teleop':
+                    val = self._key_config[key]['value']
+
+                    in_if = self.interpreters[called_interpreter]
+                    in_if.process_input(val, in_if.interpreter.BUTTON)
+
+    def route_joy(self, joy_msg):
+        if self._enable:
+            # print('enabled')
+            joy_axes = joy_msg.axes
+            joy_buttons = joy_msg.buttons
+            for i, val in enumerate(joy_axes):
+                i_str = str(i)
+                if i_str in self._joy_config['axes']:
+                    called_interpreter = self._joy_config['axes'][i_str]['called_interpreter']
+                    if called_interpreter != 'switch_teleop':
+                        in_if = self.interpreters[called_interpreter]
+                        # Check if config specified axe as a button giving a single value
+                        if 'input_type' in self._joy_config['axes'][i_str] and self._joy_config['axes'][i_str]['input_type'] == 'button':
+                            if val != 0:
+                                val = self._joy_config['axes'][i_str]['value']
+                            in_if.process_input(val, in_if.interpreter.BUTTON)
+                        else:
+                            if 'value' in self._joy_config['axes'][i_str]:
+                            #     mask_val = self._joy_config['axes'][i_str]['value']
+                            #     tmp_val = [val]*len(mask_val)
+                            #     val = np.multiply(mask_val, tmp_val)
+                                tmp_val = val
+                                val = list(self._joy_config['axes'][i_str]['value'])
+                                val[1] = tmp_val*val[1]
+                            in_if.process_input(val, in_if.interpreter.SLIDER)
+
+            for i, val in enumerate(joy_buttons):
+                i_str = str(i)
+                if val != 0 and i_str in self._joy_config['buttons']:
+                    called_interpreter = self._joy_config['buttons'][i_str]['called_interpreter']
+                    if called_interpreter != 'switch_teleop':
+                        val = self._joy_config['buttons'][i_str]['value']
+
+                        in_if = self.interpreters[called_interpreter]
+                        in_if.process_input(val, in_if.interpreter.BUTTON)
+
+    def enable(self, msg):
+        self._enable = msg.data
+
 
 if __name__ == '__main__':
-    rospy.init_node('key_interpreter')
+    rospy.init_node('input_interpreter')
 
-    # Param server
-    topic_name = rospy.get_param('~topic_name')
-    interpreter_name = rospy.get_param('~interpreter_name')
-    print 'topic_name :', topic_name
-    print 'interpreter_name :', interpreter_name
-    key_map = rospy.get_param('key_config/key_map')
-    interpreter_config_map = rospy.get_param('key_config/interpreter_config_map')
-    print 'interpreter_config_map :', interpreter_config_map
+    # lit les interpreteurs
+    # interpreters_config = rospy.get_param('teleop_config/teleop_interpreters')
+    # key_config = rospy.get_param('teleop_config/teleop_key_map')
+    # joy_config = rospy.get_param('teleop_config/teleop_joy_map')
+    interpreters_config = rospy.get_param('teleop_interpreters')
+    key_config = rospy.get_param('teleop_key_map')
+    joy_config = rospy.get_param('teleop_joy_map')
 
-    # Extraction des parametres
-    interpreter_info = interpreter_config_map[interpreter_name]
-    interpreter_types = rospy.get_param('key_config/interpreter_types')
-    interpreter_type = interpreter_info['type']
-    print 'interpreter_type :', interpreter_type
-    import_str_msg_module = interpreter_types[interpreter_type]['import'][0]
-    print 'import_str_msg_module :', import_str_msg_module
-    import_str_msg_class = interpreter_types[interpreter_type]['import'][1]
-    print 'import_str_msg_class :', import_str_msg_class
-    import_str_filler = interpreter_type
-    print 'import_str_filler :', import_str_filler
+    router = InputRouter(interpreters_config, key_config, joy_config)
 
-    # Dynamic import
-    # Ros is bound to import only
-    Msg_module = __import__(import_str_msg_module, fromlist=[import_str_msg_class])
-    Msg_class = getattr(Msg_module, import_str_msg_class)
-    print 'import result Cmd_Msg :', Msg_class
-    # Locate works only here
-    fill_msg = locate('fill_'+import_str_filler+'.fill_msg')
-    print 'import result fill_msg :', fill_msg
-    Command = locate('fill_' + import_str_filler + '.Command')
-    print 'import result Command :', Command
-    process_key = locate('fill_' + import_str_filler + '.process_key')
-    print 'import result process_key :', process_key
-
-    ki = key_interpreter()
-
-    # Dynamic publisher
-    prefix = rospy.get_param('teleop_prefix','')  # Global variable as a prefix
-    localPrefix = rospy.get_param('~teleop_prefix', '')  # Private variable as a prefix
-    cmd_pub = rospy.Publisher(prefix + localPrefix + topic_name, Msg_class, queue_size=100)
-
-    rospy.Subscriber('keys', String, ki.keys_cb, cmd_pub)
-    rospy.Subscriber('enable', Bool, ki.enable_cb)
+    rospy.Subscriber('keys', String, router.route_key)
+    rospy.Subscriber('joy', Joy, router.route_joy)
+    rospy.Subscriber('enable', Bool, router.enable)
 
     rospy.spin()

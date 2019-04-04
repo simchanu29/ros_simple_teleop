@@ -1,0 +1,21 @@
+<launch>
+    <group ns="teleop">
+
+      <rosparam file="$(find simple_teleop)/config/teleop_config.yaml" command="load"/>
+
+      # joy listener
+      <node name="joy_listener" pkg="joy" type="joy_node">
+          <param name="dev" value="/dev/input/js0"/>
+      </node>
+
+      # keyboard listener
+      <node pkg="simple_teleop" name="key_listener" type="key_listener.py"/>
+
+      # Enabler
+      <node pkg="simple_teleop" name="teleop_switch" type="enable_teleop.py" output="screen"/>
+
+      # Interpreter
+      <node pkg="simple_teleop" name="key_interpreter" type="key_interpreter.py" output="screen"/>
+
+    </group>
+</launch>
