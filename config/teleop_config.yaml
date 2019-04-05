@@ -3,37 +3,49 @@
 # teleop_config:
   # Interpreter Types :
     # 'twist':
-      # Check fill_twist.py to verify usage and structure
+      # Check interpreter_twist.py to verify usage and structure
       # usage: ['lin_x','lin_y','ang_z']
       # structure: ['type', 'topic', 'range_lin', 'range_ang', 'key_precision']
       #
     # 'wrench':
-      # Check fill_wrench.py to verify usage and structure
+      # Check interpreter_wrench.py to verify usage and structure
       # usage: ['lin_x','lin_y','ang_z']
       # structure: ['type', 'topic', 'range_lin', 'range_ang', 'key_precision']
       #
     # 'wrenchStamped':
-      # Check fill_wrench.py to verify usage and structure
+      # Check interpreter_wrench.py to verify usage and structure
       # usage: ['lin_x','lin_y','ang_z']
       # structure: ['type', 'topic', 'range_lin', 'range_ang', 'key_precision']
       #
     # 'position':
-      # Check fill_position.py to verify usage and structure
-      # usage: 'position'
+      # Check interpreter_position.py to verify usage and structure
+      # usage: ['position']
       # structure: ['type', 'topic', 'min', 'max', 'key_precision']
       #
+    # 'position_inc':
+      # SLIDER specific : For each move of the slider, the position move
+      # Check interpreter_position_inc.py to verify usage and structure
+      # usage: ['position']
+      # structure: ['type', 'topic', 'min', 'max', 'key_precision']
+      #
+    # 'position_speed':
+      # SLIDER specific : Modify the speed at which the position is computed
+      # Check interpreter_position_speed.py to verify usage and structure
+      # usage: ['position']
+      # structure: ['type', 'topic', 'min', 'max', 'key_precision', 'gain_speed']
+      #
     # 'int':
-      # Check fill_int.py to verify usage and structure
+      # Check interpreter_int.py to verify usage and structure
       # usage: ['value']
       # structure: ['type']
       #
     # 'bool_toogle':
-      # Check fill_bool_toogle.py to verify usage and structure
+      # Check interpreter_bool_toogle.py to verify usage and structure
       # usage: ['value']
       # structure: ['type']
       #
     # 'string':
-      # Check fill_string.py to verify usage and structure
+      # Check interpreter_string.py to verify usage and structure
       # usage: ['value']
       # structure: ['type']
       #
@@ -57,11 +69,12 @@ teleop_interpreters:
     'topic': '/state'
 
   'carriage':
-    'type': 'position'
+    'type': 'position_speed'
     'topic': '/man_ctrl'
     'min': 1.0
     'max': 37.0
     'key_precision': 0.2
+    'gain_speed': 0.01 # rate is 10Hz so each 1s, position will move of 0.1 at max speed
 
   'prop':
     'type': 'wrenchStamped'

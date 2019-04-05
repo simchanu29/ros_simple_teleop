@@ -73,9 +73,6 @@ class InputRouter:
                             in_if.process_input(val, in_if.interpreter.BUTTON)
                         else:
                             if 'value' in self._joy_config['axes'][i_str]:
-                            #     mask_val = self._joy_config['axes'][i_str]['value']
-                            #     tmp_val = [val]*len(mask_val)
-                            #     val = np.multiply(mask_val, tmp_val)
                                 tmp_val = val
                                 val = list(self._joy_config['axes'][i_str]['value'])
                                 val[1] = tmp_val*val[1]
@@ -94,6 +91,14 @@ class InputRouter:
     def enable(self, msg):
         self._enable = msg.data
 
+    def spin(self):
+        r = rospy.Rate(10)
+
+        while not rospy.is_shutdown():
+            if self._enable:
+                for in_if in self.interpreters:
+                    self.interpreters[in_if].interpreter.send_msg()
+            r.sleep()
 
 if __name__ == '__main__':
     rospy.init_node('input_interpreter')
@@ -112,4 +117,4 @@ if __name__ == '__main__':
     rospy.Subscriber('joy', Joy, router.route_joy)
     rospy.Subscriber('enable', Bool, router.enable)
 
-    rospy.spin()
+    router.spin()

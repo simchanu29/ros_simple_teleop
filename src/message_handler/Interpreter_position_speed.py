@@ -4,33 +4,36 @@ from Interpreter import Interpreter
 import numpy as np
 
 
-class Interpreter_position(Interpreter):
+class Interpreter_position_speed(Interpreter):
     def __init__(self, interpreter_info):
-        super(Interpreter_position, self).__init__(interpreter_info)
+        super(Interpreter_position_speed, self).__init__(interpreter_info)
         self.cmd.val = 0.0  # position
+        self.speed = 0.0
         self.pub = rospy.Publisher(self._config['topic'], Float32, queue_size=1)
         print('created publisher on', self._config['topic'])
 
     # Override
     def process_input(self, val, cmd_type):
         if cmd_type == self.SLIDER:
-            self.cmd.val = val
+            self.speed = val
 
         if cmd_type == self.BUTTON:
             # BACK keyword
-            if val == self.BACK and self.cmd.val != 0.0:
-                self.cmd.val = max(min(-self.cmd.val / abs(self.cmd.val), 1.0), -1.0)
+            if val == self.BACK and self.speed != 0.0:
+                self.speed = max(min(-self.speed / abs(self.speed), 1.0), -1.0)
             # STOP keyword
             elif val == self.STOP:
-                self.cmd.val = 0.0
+                self.speed = 0.0
             # Cas classique
             else:
-                self.cmd.val += val * self._config['key_precision']
+                self.speed += val * self._config['key_precision']
 
         # Saturation
-        self.cmd.val = np.clip(self.cmd.val, -1.0, 1.0)
+        self.speed = np.clip(self.speed, -1.0, 1.0)
 
     def send_msg(self):
+        self.cmd.val += self.speed * self._config['gain_speed']
+
         msg = Float32()
         min_cmd = float(self._config['min'])
         max_cmd = float(self._config['max'])

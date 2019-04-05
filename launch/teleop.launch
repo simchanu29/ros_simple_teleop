@@ -1,36 +1,21 @@
 <launch>
+    <group ns="teleop">
 
-    <arg name="config_path"/>
+      <rosparam file="$(find simple_teleop)/config/teleop_config.yaml" command="load"/>
 
-    <rosparam file="$(arg config_path)"/>
+      # joy listener
+      <node name="joy_listener" pkg="joy" type="joy_node">
+          <param name="dev" value="/dev/input/js0"/>
+      </node>
 
-    # joy listener
-    <node name="joy_listener" pkg="joy" type="joy_node"/>
-    <node pkg="simple_teleop" name="joy_interpreter" type="joy_interpreter.py">
-      <param name="stick_topic" value="vel"/>
-    </node>
+      # keyboard listener
+      <node pkg="simple_teleop" name="key_listener" type="key_listener.py"/>
 
-    # keyboard listener
-    <node pkg="simple_teleop" name="key_listener" type="key_listener.py"/>
+      # Enabler
+      <node pkg="simple_teleop" name="teleop_switch" type="enable_teleop.py" output="screen"/>
 
-    <node pkg="simple_teleop" name="key_twist" type="key_interpreter.py">
-        <param name="topic_name" value="vel"/>
-        <param name="interpreter_name" value="vel"/>
-    </node>
+      # Interpreter
+      <node pkg="simple_teleop" name="key_interpreter" type="key_interpreter.py" output="screen"/>
 
-    <node pkg="simple_teleop" name="key_int" type="key_interpreter.py">
-        <param name="topic_name" value="state"/>
-        <param name="interpreter_name" value="state"/>
-    </node>
-
-    <!--<node pkg="ros_teleop" name="key_wrench" type="key_interpreter.py">-->
-    <!--<param name="topic_name" value="wrench"/>-->
-    <!--</node>-->
-    <!--<node pkg="ros_teleop" name="key_servo1" type="key_interpreter.py">-->
-    <!--<param name="topic_name" value="position_servo1"/>-->
-    <!--</node>-->
-    <!--<node pkg="ros_teleop" name="key_servo2" type="key_interpreter.py">-->
-    <!--<param name="topic_name" value="position_servo2"/>-->
-    <!--</node>-->
-
+    </group>
 </launch>

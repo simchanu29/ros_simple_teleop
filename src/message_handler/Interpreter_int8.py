@@ -16,9 +16,6 @@ class Interpreter_int8(Interpreter):
         print('val=', val)
         self.cmd.val = int(val)
 
-        # Send message
-        self.send_msg()
-
     def send_msg(self):
         msg = Int8()
         msg.data = self.cmd.val

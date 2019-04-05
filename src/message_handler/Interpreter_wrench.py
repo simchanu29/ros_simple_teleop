@@ -25,9 +25,6 @@ class Interpreter_wrench(Interpreter):
         # Saturation
         self.cmd.val = np.clip(self.cmd.val, -1.0, 1.0)
 
-        # Send message
-        self.send_msg()
-
     def handle_key(self, i, val):
         # BACK keyword
         if val == self.BACK and self.cmd.val[i] != 0.0:

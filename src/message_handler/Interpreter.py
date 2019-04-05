@@ -21,7 +21,7 @@ class Interpreter(object):
         print('Error : No process function defined for', val)
 
     def send_msg(self):
-        print('Error : No fill_msg function defined')
+        print('Error : No send_msg function defined')
 
 
 class Command:

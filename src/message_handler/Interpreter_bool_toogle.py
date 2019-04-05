@@ -13,9 +13,6 @@ class Interpreter_bool_toogle(Interpreter):
     def process_input(self, val, cmd_type):
         self.cmd.val = not bool(val)
 
-        # Send message
-        self.send_msg()
-
     def send_msg(self):
         msg = Bool()
         msg.data = self.cmd.val
