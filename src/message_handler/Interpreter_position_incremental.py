@@ -26,6 +26,8 @@ class Interpreter_position_incremental(Interpreter):
         # Saturation
         self.cmd.val = np.clip(self.cmd.val, -1.0, 1.0)
 
+        self.cmd.send = True
+
     def send_msg(self):
         msg = Float32()
         min_cmd = float(self._config['min'])
@@ -36,3 +38,4 @@ class Interpreter_position_incremental(Interpreter):
         msg.data = np.clip(self.cmd.val * range_cmd + offset, min_cmd, max_cmd)
 
         self.pub.publish(msg)
+        self.cmd.send = False

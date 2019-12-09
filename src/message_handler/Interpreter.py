@@ -16,6 +16,7 @@ class Interpreter(object):
         # Global keywords for config
         self.BACK = 'BACK'
         self.STOP = 'STOP'
+        self.NULL = 'NULL'
 
     def process_input(self, val, cmd_type):
         print('Error : No process function defined for', val)

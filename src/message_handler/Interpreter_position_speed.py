@@ -32,14 +32,17 @@ class Interpreter_position_speed(Interpreter):
         self.speed = np.clip(self.speed, -1.0, 1.0)
 
     def send_msg(self):
-        self.cmd.val += self.speed * self._config['gain_speed']
 
-        msg = Float32()
-        min_cmd = float(self._config['min'])
-        max_cmd = float(self._config['max'])
-        range_cmd = (max_cmd - min_cmd)/2.0  # car de -1 a 1 ca fait range = 2
-        offset = range_cmd + min_cmd
+        cmd_val_tmp = self.cmd.val + self.speed * self._config['gain_speed']
 
-        msg.data = np.clip(self.cmd.val * range_cmd + offset, min_cmd, max_cmd)
+        if cmd_val_tmp != self.cmd.val:
+            self.cmd.val = cmd_val_tmp
+            msg = Float32()
+            min_cmd = float(self._config['min'])
+            max_cmd = float(self._config['max'])
+            range_cmd = (max_cmd - min_cmd)/2.0  # car de -1 a 1 ca fait range = 2
+            offset = range_cmd + min_cmd
 
-        self.pub.publish(msg)
+            msg.data = np.clip(self.cmd.val * range_cmd + offset, min_cmd, max_cmd)
+
+            self.pub.publish(msg)

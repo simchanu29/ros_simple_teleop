@@ -34,7 +34,7 @@ class InputRouter:
 
         self._key_config = key_config
         self._joy_config = joy_config
-        self._enable = True
+        self._enable = False
 
         self.interpreters = {}
         # Ces interpreteurs sont associés à un script python. Il peut y avoir plusieurs instances nommées séparéments
@@ -50,16 +50,23 @@ class InputRouter:
             if key in self._key_config:
                 called_interpreter = self._key_config[key]['called_interpreter']
                 if called_interpreter != 'switch_teleop':
-                    val = self._key_config[key]['value']
+                    if 'value' in self._key_config[key]:
+                        val = self._key_config[key]['value']
+                    else:
+                        val = None
 
                     in_if = self.interpreters[called_interpreter]
                     in_if.process_input(val, in_if.interpreter.BUTTON)
 
     def route_joy(self, joy_msg):
+        """
+        Route the messages from joystick to the right interpreter
+        """
         if self._enable:
             # print('enabled')
             joy_axes = joy_msg.axes
             joy_buttons = joy_msg.buttons
+            # For each axes
             for i, val in enumerate(joy_axes):
                 i_str = str(i)
                 if i_str in self._joy_config['axes']:
@@ -72,18 +79,24 @@ class InputRouter:
                                 val = self._joy_config['axes'][i_str]['value']
                             in_if.process_input(val, in_if.interpreter.BUTTON)
                         else:
+                            # SLIDER handler (table or value)
                             if 'value' in self._joy_config['axes'][i_str]:
                                 tmp_val = val
-                                val = list(self._joy_config['axes'][i_str]['value'])
-                                val[1] = tmp_val*val[1]
-                            in_if.process_input(val, in_if.interpreter.SLIDER)
-
+                                config = self._joy_config['axes'][i_str]['value']
+                                if isinstance(config, list):
+                                    config = list(self._joy_config['axes'][i_str]['value'])
+                                    config[1] = tmp_val*config[1]  # in tables, second item is always the value
+                                else:
+                                    config = tmp_val*config
+                                in_if.process_input(config, in_if.interpreter.SLIDER)
+            # For each buttons
             for i, val in enumerate(joy_buttons):
                 i_str = str(i)
                 if val != 0 and i_str in self._joy_config['buttons']:
                     called_interpreter = self._joy_config['buttons'][i_str]['called_interpreter']
                     if called_interpreter != 'switch_teleop':
-                        val = self._joy_config['buttons'][i_str]['value']
+                        if 'value' in self._joy_config['buttons'][i_str]:
+                            val = self._joy_config['buttons'][i_str]['value']
 
                         in_if = self.interpreters[called_interpreter]
                         in_if.process_input(val, in_if.interpreter.BUTTON)
@@ -97,7 +110,8 @@ class InputRouter:
         while not rospy.is_shutdown():
             if self._enable:
                 for in_if in self.interpreters:
-                    self.interpreters[in_if].interpreter.send_msg()
+                    if self.interpreters[in_if].interpreter.cmd.send:
+                        self.interpreters[in_if].interpreter.send_msg()
             r.sleep()
 
 if __name__ == '__main__':

@@ -15,9 +15,11 @@ class Interpreter_int8(Interpreter):
     def process_input(self, val, cmd_type):
         print('val=', val)
         self.cmd.val = int(val)
+        self.cmd.send = True
 
     def send_msg(self):
         msg = Int8()
         msg.data = self.cmd.val
 
         self.pub.publish(msg)
+        self.cmd.send = False

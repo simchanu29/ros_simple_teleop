@@ -15,9 +15,11 @@ class Interpreter_string(Interpreter):
 
         # Send message
         self.send_msg()
+        self.cmd.send = True
 
     def send_msg(self):
         msg = String()
         msg.data = self.cmd.val
 
         self.pub.publish(msg)
+        self.cmd.send = False
