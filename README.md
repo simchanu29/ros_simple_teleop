@@ -7,7 +7,7 @@ Version de ROS testée :
  - Melodic
 
 Ce package a été développé pour la commande de multiples actionneurs sur un robot allant d'une commande en force, en vitesse ou encore en position.
-Voici les types supportés :
+Voici quelques types supportés (pour une liste complète regarder dans le dossier message_handler) :
  - Wrench
  - Twist
  - Position (Float32 avec modification additive de la valeur de commande)
