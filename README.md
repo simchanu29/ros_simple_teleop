@@ -56,3 +56,6 @@ Par exemple pour avancer ou reculer :
   called_interpreter: 'twist_turtle'
   value: [-1,0,0]
 ```
+
+### Problèmes rencontrés
+Ce package est en version beta. Pour tout bug repéré ou proposition d'amélioration (documentation ou code) ouvrir une issue.
