@@ -1,7 +1,10 @@
 # simple_teleop
 
 Package ros pour la téléopération. Peut publier des messages Twist, Wrench ou Float32 suivant les besoins.
-Version de ROS testée : Kinetic
+
+Version de ROS testée : 
+ - Kinetic
+ - Melodic
 
 Ce package a été développé pour la commande de multiples actionneurs sur un robot allant d'une commande en force, en vitesse ou encore en position.
 Voici les types supportés :
