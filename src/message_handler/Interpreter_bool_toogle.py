@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 import rospy
 from std_msgs.msg import Bool
-from Interpreter import Interpreter
+from .Interpreter import Interpreter
 
 
 class Interpreter_bool_toogle(Interpreter):

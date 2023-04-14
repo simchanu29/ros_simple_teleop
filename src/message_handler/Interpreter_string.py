@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 import rospy
 from std_msgs.msg import String
-from Interpreter import Interpreter
+from .Interpreter import Interpreter
 
 
 class Interpreter_string(Interpreter):

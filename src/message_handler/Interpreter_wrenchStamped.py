@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
+
 import rospy
 from geometry_msgs.msg import WrenchStamped
 from std_msgs.msg import Float64
-from Interpreter import Interpreter
+from .Interpreter import Interpreter
 import numpy as np
 
 

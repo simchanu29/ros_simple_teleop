@@ -10,6 +10,8 @@ class Enabler:
     def __init__(self, input_switch_teleop):
         self._input_switch_teleop = input_switch_teleop
         self._enable = False
+        rospy.logwarn('TELEOP UNARMED')
+
 
     def key_cb(self, msg):
         # rospy.loginfo("msg={}".format(msg.data))
@@ -71,8 +73,8 @@ if __name__ == '__main__':
     enabler = Enabler(extract_input())
 
     # Pub sub
-    enable_pub = rospy.Publisher('enable', Bool, queue_size=5)
-    key_sub = rospy.Subscriber('keys', String, enabler.key_cb)
-    joy_sub = rospy.Subscriber('joy', Joy, enabler.joy_cb)
+    enable_pub = rospy.Publisher('enable', Bool, queue_size=5, tcp_nodelay=True)
+    key_sub = rospy.Subscriber('keys', String, enabler.key_cb, tcp_nodelay=True)
+    joy_sub = rospy.Subscriber('joy', Joy, enabler.joy_cb, tcp_nodelay=True)
 
     rospy.spin()

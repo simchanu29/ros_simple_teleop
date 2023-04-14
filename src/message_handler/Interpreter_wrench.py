@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 import rospy
 from geometry_msgs.msg import Wrench
-from Interpreter import Interpreter
+from .Interpreter import Interpreter
 import numpy as np
 
 
@@ -45,5 +47,17 @@ class Interpreter_wrench(Interpreter):
         msg.torque.x = self.cmd.val[3] * self._config['range_ang']
         msg.torque.y = self.cmd.val[4] * self._config['range_ang']
         msg.torque.z = self.cmd.val[5] * self._config['range_ang']
+
+        self.pub.publish(msg)
+
+    def reset(self):
+        msg = Wrench()
+
+        msg.force.x = 0
+        msg.force.y = 0
+        msg.force.z = 0
+        msg.torque.x = 0
+        msg.torque.y = 0
+        msg.torque.z = 0
 
         self.pub.publish(msg)

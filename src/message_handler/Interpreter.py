@@ -1,7 +1,7 @@
-
+#!/usr/bin/env python3
 
 class Interpreter(object):
-# class Interpreter:
+    # class Interpreter:
     def __init__(self, config):
         # print('Initializing Parent Interpreter')
         self._config = config
@@ -18,11 +18,17 @@ class Interpreter(object):
         self.STOP = 'STOP'
         self.NULL = 'NULL'
 
+    def sync_loop(self):
+        print('Error : No sync loop defined for', self)
+
     def process_input(self, val, cmd_type):
         print('Error : No process function defined for', val)
 
     def send_msg(self):
         print('Error : No send_msg function defined')
+
+    def reset(self):
+        print('Error : No reset function defined')
 
 
 class Command:

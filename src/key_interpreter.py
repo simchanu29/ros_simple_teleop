@@ -5,6 +5,8 @@ from pydoc import locate
 from std_msgs.msg import String, Bool
 from sensor_msgs.msg import Joy
 import numpy as np
+import sys
+# import json
 
 class InterpreterInterface:
     def __init__(self, config):
@@ -34,7 +36,9 @@ class InputRouter:
 
         self._key_config = key_config
         self._joy_config = joy_config
+        # print(json.dumps(joy_config, indent=4, sort_keys=True))
         self._enable = False
+        self._reset_ok = False
 
         self.interpreters = {}
         # Ces interpreteurs sont associés à un script python. Il peut y avoir plusieurs instances nommées séparéments
@@ -84,17 +88,29 @@ class InputRouter:
                                 tmp_val = val
                                 config = self._joy_config['axes'][i_str]['value']
                                 if isinstance(config, list):
+                                    # copie pour ne pas modifier la config
                                     config = list(self._joy_config['axes'][i_str]['value'])
+
                                     config[1] = tmp_val*config[1]  # in tables, second item is always the value
+                                elif isinstance(config, dict):
+                                    # copie pour ne pas modifier la config
+                                    config = self._joy_config['axes'][i_str]['value'].copy()
+
+                                    key = next(iter(config))
+                                    config[key] = tmp_val*config[key]  # on sliders, only first key is taken as a slider
+                                    if len(config) > 1:
+                                        rospy.logwarn("config is longer than 1, can't predict behavior : {}".format(config))
                                 else:
                                     config = tmp_val*config
                                 in_if.process_input(config, in_if.interpreter.SLIDER)
             # For each buttons
             for i, val in enumerate(joy_buttons):
                 i_str = str(i)
+                # print(self._joy_config['buttons'])
                 if val != 0 and i_str in self._joy_config['buttons']:
                     called_interpreter = self._joy_config['buttons'][i_str]['called_interpreter']
                     if called_interpreter != 'switch_teleop':
+                        # print(i_str, self._joy_config['buttons'][i_str], self._joy_config['buttons'][i_str]['value'])
                         if 'value' in self._joy_config['buttons'][i_str]:
                             val = self._joy_config['buttons'][i_str]['value']
 
@@ -105,17 +121,43 @@ class InputRouter:
         self._enable = msg.data
 
     def spin(self):
-        r = rospy.Rate(10)
+        freq = rospy.get_param('~freq', 10)
+        r = rospy.Rate(freq)
 
-        while not rospy.is_shutdown():
-            if self._enable:
-                for in_if in self.interpreters:
-                    if self.interpreters[in_if].interpreter.cmd.send:
-                        self.interpreters[in_if].interpreter.send_msg()
-            r.sleep()
+        try:
+            while not rospy.is_shutdown():
+                if self._enable:
+                    for in_if in self.interpreters:
+
+                        # Function that run all the time
+                        self.interpreters[in_if].interpreter.sync_loop()
+
+                        if self.interpreters[in_if].interpreter.cmd.send:
+
+                            # Message sent only if there is something significant to do
+                            self.interpreters[in_if].interpreter.send_msg()
+
+                    self._reset_ok = False
+
+                else:
+                    if not self._reset_ok:
+                        for in_if in self.interpreters:
+
+                            self.interpreters[in_if].interpreter.reset()
+
+                        self._reset_ok = True
+
+                r.sleep()
+
+        except KeyboardInterrupt:
+            for in_if in self.interpreters:
+                self.interpreters[in_if].interpreter.reset()
+            # quit
+            sys.exit()
+
 
 if __name__ == '__main__':
-    rospy.init_node('input_interpreter')
+    rospy.init_node('input_interpreter', disable_signals=True)
 
     # lit les interpreteurs
     # interpreters_config = rospy.get_param('teleop_config/teleop_interpreters')
@@ -127,8 +169,8 @@ if __name__ == '__main__':
 
     router = InputRouter(interpreters_config, key_config, joy_config)
 
-    rospy.Subscriber('keys', String, router.route_key)
-    rospy.Subscriber('joy', Joy, router.route_joy)
-    rospy.Subscriber('enable', Bool, router.enable)
+    rospy.Subscriber('keys', String, router.route_key, tcp_nodelay=True)
+    rospy.Subscriber('joy', Joy, router.route_joy, tcp_nodelay=True)
+    rospy.Subscriber('enable', Bool, router.enable, tcp_nodelay=True)
 
     router.spin()

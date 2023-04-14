@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 
 import rospy
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Vector3
 # import Interpreter.Interpreter as Interpreter
 from .Interpreter import Interpreter
 # import Interpreter
 import numpy as np
 
 
-class Interpreter_twist(Interpreter):
+class Interpreter_twistVector3(Interpreter):
     def __init__(self, interpreter_info):
-        super(Interpreter_twist, self).__init__(interpreter_info)
+        super(Interpreter_twistVector3, self).__init__(interpreter_info)
 
-        print('Initializing interpreter twist')
+        print('Initializing interpreter twistVector3')
         self.cmd.val = [0.0, 0.0, 0.0]
-        self.pub = rospy.Publisher(self._config['topic'], Twist, queue_size=1)
+        self.pub = rospy.Publisher(self._config['topic'], Vector3, queue_size=1)
         print('created publisher on', self._config['topic'])
 
     # Override
@@ -44,27 +44,10 @@ class Interpreter_twist(Interpreter):
             self.cmd.val[i] += val * self._config['key_precision']
 
     def send_msg(self):
-        msg = Twist()
+        msg = Vector3()
 
-        msg.angular.x = 0
-        msg.angular.y = 0
-        msg.angular.z = self.cmd.val[2] * self._config['range_ang']
-
-        msg.linear.x = self.cmd.val[0] * self._config['range_lin']
-        msg.linear.y = self.cmd.val[1] * self._config['range_lin']
-        msg.linear.z = 0
-
-        self.pub.publish(msg)
-
-    def reset(self):
-        msg = Twist()
-
-        msg.angular.x = 0
-        msg.angular.y = 0
-        msg.angular.z = 0
-
-        msg.linear.x = 0
-        msg.linear.y = 0
-        msg.linear.z = 0
+        msg.x = self.cmd.val[0] * self._config['range_lin']
+        msg.y = self.cmd.val[1] * self._config['range_lin']
+        msg.z = self.cmd.val[2] * self._config['range_ang']
 
         self.pub.publish(msg)

@@ -8,12 +8,15 @@ from .Interpreter import Interpreter
 import numpy as np
 
 
-class Interpreter_twist(Interpreter):
+class Interpreter_twistConfigurable(Interpreter):
     def __init__(self, interpreter_info):
-        super(Interpreter_twist, self).__init__(interpreter_info)
+        super(Interpreter_twistConfigurable, self).__init__(interpreter_info)
 
-        print('Initializing interpreter twist')
-        self.cmd.val = [0.0, 0.0, 0.0]
+        print('Initializing interpreter twistConfigurable')
+        self.cmd.val = [0.0, 0.0, 0.0,
+                        self._config['range_lin_init'],
+                        self._config['range_lin_init'],
+                        self._config['range_ang_init']]
         self.pub = rospy.Publisher(self._config['topic'], Twist, queue_size=1)
         print('created publisher on', self._config['topic'])
 
@@ -30,7 +33,12 @@ class Interpreter_twist(Interpreter):
                 self.handle_key(val[0], val[1])
 
         # Saturation
-        self.cmd.val = np.clip(self.cmd.val, -1.0, 1.0)
+        # cmd
+        self.cmd.val[0:2] = np.clip(self.cmd.val[0:2], -1.0, 1.0)
+        # range lin
+        self.cmd.val[3:4] = np.clip(self.cmd.val[3:4], 0.0, self._config['range_lin_max'])
+        # range ang
+        self.cmd.val[5] = np.clip(self.cmd.val[5], 0.0, self._config['range_ang_max'])
 
     def handle_key(self, i, val):
         # BACK keyword
@@ -41,17 +49,28 @@ class Interpreter_twist(Interpreter):
             self.cmd.val[i] = 0.0
         # Cas classique
         else:
-            self.cmd.val[i] += val * self._config['key_precision']
+            if i < 3:
+                prec = self._config['key_precision_cmd']
+            else:
+                prec = self._config['key_precision_range']
+
+            self.cmd.val[i] += val * prec
+            if i == 3:
+                rospy.logwarn("range lin X modified to {}".format(self.cmd.val[i]))
+            if i == 4:
+                rospy.logwarn("range lin Y modified to {}".format(self.cmd.val[i]))
+            if i == 5:
+                rospy.logwarn("range ang modified to {}".format(self.cmd.val[i]))
 
     def send_msg(self):
         msg = Twist()
 
         msg.angular.x = 0
         msg.angular.y = 0
-        msg.angular.z = self.cmd.val[2] * self._config['range_ang']
+        msg.angular.z = self.cmd.val[2] * self.cmd.val[2+3]
 
-        msg.linear.x = self.cmd.val[0] * self._config['range_lin']
-        msg.linear.y = self.cmd.val[1] * self._config['range_lin']
+        msg.linear.x = self.cmd.val[0] * self.cmd.val[0+3]
+        msg.linear.y = self.cmd.val[1] * self.cmd.val[1+3]
         msg.linear.z = 0
 
         self.pub.publish(msg)
